@@ -1,0 +1,12 @@
+<h2>Why is this an issue?</h2>
+<p>To improve readability, maintainability, and visual differentiation between SQL syntax keywords and database identifiers, all SQL keywords should be consistently written in <b>UPPERCASE</b>.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+select customer_id, first_name from dbo.customers where active = 1;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+SELECT customer_id, first_name FROM dbo.customers WHERE active = 1;
+</pre>

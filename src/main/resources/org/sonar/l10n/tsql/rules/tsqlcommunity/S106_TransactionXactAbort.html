@@ -1,0 +1,20 @@
+<h2>Why is this an issue?</h2>
+<p>In T-SQL, by default when a runtime statement error occurs inside an explicit transaction (<code>BEGIN TRANSACTION</code>), SQL Server does not automatically roll back the entire transaction unless <code>SET XACT_ABORT ON</code> is specified or a structured exception block (<code>TRY...CATCH</code>) rolls it back.</p>
+<p>This frequently causes orphaned open transactions, connection pool deadlocks, and blocking chains.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+BEGIN TRANSACTION;
+UPDATE dbo.Accounts SET Balance = Balance - 100 WHERE AccountID = 1;
+UPDATE dbo.Accounts SET Balance = Balance + 100 WHERE AccountID = 2;
+COMMIT TRANSACTION;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+SET XACT_ABORT ON;
+BEGIN TRANSACTION;
+UPDATE dbo.Accounts SET Balance = Balance - 100 WHERE AccountID = 1;
+UPDATE dbo.Accounts SET Balance = Balance + 100 WHERE AccountID = 2;
+COMMIT TRANSACTION;
+</pre>

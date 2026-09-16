@@ -1,0 +1,13 @@
+<h2>Why is this an issue?</h2>
+<p>Microsoft SQL Server has formally deprecated statements not terminated by a semicolon (<code>;</code>).</p>
+<p>Furthermore, statements preceding common table expressions (<code>WITH CTE ...</code>) and <code>THROW</code> or <code>MERGE</code> strictly require semicolon termination in modern SQL Server versions.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+SELECT CustomerID FROM dbo.Customers
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+SELECT CustomerID FROM dbo.Customers;
+</pre>

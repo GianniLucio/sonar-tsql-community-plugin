@@ -1,0 +1,17 @@
+<h2>Why is this an issue?</h2>
+<p>Using <code>SELECT *</code> or <code>SELECT table.*</code> queries in production code, views, and stored procedures causes significant issues:</p>
+<ul>
+    <li>Retrieves unnecessary columns across the network, wasting database and I/O bandwidth.</li>
+    <li>Prevents query optimizer from using covering non-clustered indexes.</li>
+    <li>Breaks application mapping when columns are added, removed, or reordered in underlying tables.</li>
+</ul>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+SELECT * FROM dbo.Customers WHERE Status = 1;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+SELECT CustomerID, CustomerName, Email FROM dbo.Customers WHERE Status = 1;
+</pre>

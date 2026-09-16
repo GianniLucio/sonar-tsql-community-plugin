@@ -1,0 +1,19 @@
+<h2>Why is this an issue?</h2>
+<p>In Microsoft SQL Server, stored procedures prefixed with <code>sp_</code> are designated for system procedures located in the <code>master</code> database.</p>
+<p>When executing a procedure starting with <code>sp_</code>, SQL Server first searches the system catalog in the <code>master</code> database, causing extra schema locks and cache misses before searching the user database.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+CREATE PROCEDURE dbo.sp_GetCustomerOrders
+    @CustomerID INT
+AS
+    SELECT OrderID FROM dbo.Orders WHERE CustomerID = @CustomerID;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+CREATE PROCEDURE dbo.usp_GetCustomerOrders
+    @CustomerID INT
+AS
+    SELECT OrderID FROM dbo.Orders WHERE CustomerID = @CustomerID;
+</pre>

@@ -1,0 +1,18 @@
+<h2>Why is this an issue?</h2>
+<p>The <code>NOLOCK</code> or <code>READUNCOMMITTED</code> table hints instruct SQL Server to read uncommitted transactions:</p>
+<ul>
+    <li>Causes <b>dirty reads</b>, reading values that are subsequently rolled back.</li>
+    <li>Causes <b>phantom reads</b> and skipping or duplicating rows during index page splits.</li>
+    <li>May cause query failures with Error 601 (data movement error).</li>
+</ul>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+SELECT OrderID, TotalAmount FROM dbo.Orders WITH (NOLOCK) WHERE Status = 'Shipped';
+</pre>
+
+<h2>Compliant Solution</h2>
+<p>Prefer using <b>Read Committed Snapshot Isolation (RCSI)</b> or <b>Snapshot Isolation</b> at database level, or omit the hint:</p>
+<pre>
+SELECT OrderID, TotalAmount FROM dbo.Orders WHERE Status = 'Shipped';
+</pre>

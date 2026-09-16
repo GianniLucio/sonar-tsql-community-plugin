@@ -1,0 +1,12 @@
+<h2>Why is this an issue?</h2>
+<p>Referencing columns by ordinal numbers (e.g. <code>ORDER BY 1, 2</code>) harms maintainability and query readability. When columns in the <code>SELECT</code> list are reordered, added, or removed, the sort order changes unexpectedly without causing a syntax error.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+SELECT CustomerID, LastName, FirstName FROM dbo.Customers ORDER BY 2, 3;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+SELECT CustomerID, LastName, FirstName FROM dbo.Customers ORDER BY LastName, FirstName;
+</pre>

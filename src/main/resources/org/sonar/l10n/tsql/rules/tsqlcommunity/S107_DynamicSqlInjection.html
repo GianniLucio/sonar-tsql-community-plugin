@@ -1,0 +1,15 @@
+<h2>Why is this an issue?</h2>
+<p>Executing dynamic SQL queries constructed through string concatenation exposes the database to critical <b>SQL Injection (CWE-89 / OWASP A1)</b> vulnerabilities.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+DECLARE @sql NVARCHAR(1000);
+SET @sql = 'SELECT * FROM dbo.Users WHERE UserName = ''' + @UserName + '''';
+EXEC(@sql);
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+DECLARE @sql NVARCHAR(1000) = N'SELECT UserID, UserName, Email FROM dbo.Users WHERE UserName = @pUser;';
+EXEC sp_executesql @sql, N'@pUser NVARCHAR(100)', @pUser = @UserName;
+</pre>

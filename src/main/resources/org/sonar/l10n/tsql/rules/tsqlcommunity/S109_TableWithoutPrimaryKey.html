@@ -1,0 +1,20 @@
+<h2>Why is this an issue?</h2>
+<p>In relational database design, every table should have a <code>PRIMARY KEY</code> constraint to uniquely identify each row and ensure physical storage clustering or index optimization.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+CREATE TABLE dbo.AuditLogs (
+    LogID INT,
+    Message NVARCHAR(500),
+    CreatedAt DATETIME
+);
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+CREATE TABLE dbo.AuditLogs (
+    LogID INT IDENTITY(1,1) PRIMARY KEY,
+    Message NVARCHAR(500),
+    CreatedAt DATETIME NOT NULL
+);
+</pre>

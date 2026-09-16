@@ -1,0 +1,11 @@
+<h2>Why is this an issue?</h2>
+<p>Procedural cursors (<code>CURSOR</code>) force row-by-row processing (RBAR) inside the database engine, bypassing set-based query optimization and consuming extensive memory and tempdb resources.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+DECLARE order_cursor CURSOR FOR
+SELECT OrderID FROM dbo.Orders;
+</pre>
+
+<h2>Compliant Solution</h2>
+<p>Rewrite iterative logic using set-based operations (JOIN, CTE, Window Functions, or bulk DML).</p>
