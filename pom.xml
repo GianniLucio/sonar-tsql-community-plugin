@@ -11,7 +11,7 @@
 
     <name>T-SQL Community Analyzer for SonarQube</name>
     <description>SonarQube Community Edition plugin for analyzing Microsoft T-SQL scripts using ANTLR4 parser</description>
-    <url>https://github.com/giannicordone/sonar-tsql-community-plugin</url>
+    <url>https://github.com/GianniLucio/sonar-tsql-community-plugin</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
