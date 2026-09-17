@@ -1,61 +1,61 @@
 # T-SQL Community Analyzer for SonarQube
 
-Plugin open-source per **SonarQube Community Edition** (compatibile con SonarQube 9.x, 10.x e LTS) dedicato all'analisi statica di codice e script **Microsoft Transact-SQL (T-SQL)**.
+Open-source plugin for **SonarQube Community Edition** (compatible with SonarQube 9.x, 10.x, and LTS releases) for static analysis of **Microsoft Transact-SQL (T-SQL)** code and scripts.
 
-Il plugin sfrutta un parser **ANTLR4** integrato in Java per generare l'AST (Abstract Syntax Tree), calcolare le metriche di codice (NCLOC, righe di commento) ed eseguire controlli statici di qualità, sicurezza, performance e conformità alle best practice T-SQL.
-
----
-
-## 🚀 Caratteristiche Principali
-
-- **Compatibilità SonarQube**: SonarQube Community Edition 9.x - 10.x+.
-- **Estensioni supportate**: `.sql`, `.tsql` (configurabili via property `sonar.tsql.file.suffixes`).
-- **Analisi AST nativa**: Basato su grammatica ANTLR4 T-SQL incorporata (senza dipendenze esterne a runtime).
-- **Quality Profile predefinito**: Profilo "Sonar way" per T-SQL con regole attive di default.
-- **Metriche calcolate**: Righe di codice (NCLOC) e righe di commenti.
+The plugin uses an **ANTLR4** parser integrated with Java to generate the AST (Abstract Syntax Tree), calculate code metrics (NCLOC and comment lines), and run static checks for T-SQL quality, security, performance, and best-practice compliance.
 
 ---
 
-## 📋 Regole Incluse di Default
+## 🚀 Key Features
 
-| Regola | Tipo | Severità | Descrizione |
+- **SonarQube compatibility**: SonarQube Community Edition 9.x - 10.x+.
+- **Supported extensions**: `.sql`, `.tsql` (configurable through the `sonar.tsql.file.suffixes` property).
+- **Native AST analysis**: Based on an embedded ANTLR4 T-SQL grammar, with no external runtime dependencies.
+- **Default quality profile**: A T-SQL "Sonar way" profile with rules enabled by default.
+- **Calculated metrics**: Non-comment lines of code (NCLOC) and comment lines.
+
+---
+
+## 📋 Default Rules
+
+| Rule | Type | Severity | Description |
 |---|---|---|---|
-| `S101_AvoidSelectStar` | Code Smell | Major | Evita l'uso di `SELECT *` e `SELECT table.*` in query, viste e stored procedure. |
-| `S102_AvoidNoLock` | Bug | Critical | Evita l'uso di hint `NOLOCK` / `READUNCOMMITTED` (rischio dirty reads e phantom data). |
-| `S103_AvoidSpPrefix` | Code Smell | Major | Le stored procedure utente non devono iniziare con `sp_` (riservato al database `master`). |
-| `S104_MissingSemicolon` | Code Smell | Minor | I comandi T-SQL devono terminare con il punto e virgola `;` (sintassi deprecata da Microsoft). |
-| `S105_AvoidCursor` | Code Smell | Major | Evita l'uso di cursori procedurali `CURSOR`; preferisci operazioni set-based. |
-| `S106_TransactionXactAbort` | Bug | Critical | Le transazioni esplicite devono impostare `SET XACT_ABORT ON` o usare blocchi `TRY...CATCH`. |
-| `S107_DynamicSqlInjection` | Vulnerability | Blocker | Evita SQL dinamico con concatenazione di stringhe `+` (vulnerabilità SQL Injection CWE-89). |
-| `S108_AvoidOrderByOrdinal` | Code Smell | Minor | Evita numeri ordinali di colonna in `ORDER BY` (es. `ORDER BY 1, 2`). |
-| `S109_TableWithoutPrimaryKey` | Bug | Critical | Le tabelle create con `CREATE TABLE` devono definire un vincolo `PRIMARY KEY`. |
-| `S110_UpperKeywords` | Code Smell | Info | Le keyword SQL devono essere scritte in MAIUSCOLO per leggibilità e stile uniforme. |
+| `S101_AvoidSelectStar` | Code Smell | Major | Avoid using `SELECT *` and `SELECT table.*` in queries, views, and stored procedures. |
+| `S102_AvoidNoLock` | Bug | Critical | Avoid `NOLOCK` / `READUNCOMMITTED` hints because they can cause dirty reads and phantom data. |
+| `S103_AvoidSpPrefix` | Code Smell | Major | User stored procedures should not start with `sp_`, which is reserved for the `master` database. |
+| `S104_MissingSemicolon` | Code Smell | Minor | T-SQL statements must end with a semicolon `;` (syntax recommended by Microsoft). |
+| `S105_AvoidCursor` | Code Smell | Major | Avoid procedural `CURSOR` usage; prefer set-based operations. |
+| `S106_TransactionXactAbort` | Bug | Critical | Explicit transactions must set `SET XACT_ABORT ON` or use `TRY...CATCH` blocks. |
+| `S107_DynamicSqlInjection` | Vulnerability | Blocker | Avoid dynamic SQL built through string concatenation `+` (SQL injection vulnerability, CWE-89). |
+| `S108_AvoidOrderByOrdinal` | Code Smell | Minor | Avoid ordinal column numbers in `ORDER BY` (for example, `ORDER BY 1, 2`). |
+| `S109_TableWithoutPrimaryKey` | Bug | Critical | Tables created with `CREATE TABLE` must define a `PRIMARY KEY` constraint. |
+| `S110_UpperKeywords` | Code Smell | Info | SQL keywords should be written in uppercase for readability and consistent style. |
 
 ---
 
-## 🛠️ Build e Installazione
+## 🛠️ Build and Installation
 
-### 1. Prerequisiti
+### 1. Prerequisites
 - Java JDK 17+
 - Apache Maven 3.8+
 
-### 2. Compilazione del plugin
-Esegui dalla root del repository:
+### 2. Build the plugin
+Run this command from the repository root:
 ```bash
 mvn clean package
 ```
-Il file generato sarà presente in `target/sonar-tsql-community-plugin-1.0.0-SNAPSHOT.jar`.
+The generated file will be available at `target/sonar-tsql-community-plugin-1.0.0.jar`.
 
-### 3. Installazione in SonarQube
-1. Copia il file `.jar` generato nella cartella dei plugin di SonarQube:
+### 3. Install it in SonarQube
+1. Copy the generated `.jar` file to the SonarQube plugins directory:
    ```bash
-   cp target/sonar-tsql-community-plugin-1.0.0-SNAPSHOT.jar $SONARQUBE_HOME/extensions/plugins/
+   cp target/sonar-tsql-community-plugin-1.0.0.jar $SONARQUBE_HOME/extensions/plugins/
    ```
-2. Riavvia il server SonarQube:
+2. Restart the SonarQube server:
    ```bash
    $SONARQUBE_HOME/bin/[OS]/sonar.sh restart
    ```
-3. Vai su SonarQube Web UI -> **Rules** -> filtra per linguaggio **T-SQL** per visualizzare e personalizzare le regole.
+3. In the SonarQube Web UI, go to **Rules** and filter by the **T-SQL** language to view and customize the rules.
 
 ---
 
@@ -68,39 +68,39 @@ sonar.projectKey=my-database-project
 sonar.projectName=My Database Project
 sonar.projectVersion=1.0
 
-# Directory contenente gli script .sql
+# Directory containing .sql scripts
 sonar.sources=src/sql
 sonar.sourceEncoding=UTF-8
 
-# (Opzionale) Estensioni file riconosciute
+# (Optional) Recognized file extensions
 sonar.tsql.file.suffixes=.sql,.tsql
 ```
 
-Esegui l'analisi con SonarScanner CLI:
+Run the analysis with the SonarScanner CLI:
 ```bash
 sonar-scanner
 ```
 
 ---
 
-## 🧩 Come Aggiungere Nuove Regole
+## 🧩 Adding New Rules
 
-1. **Crea la classe della regola** in `src/main/java/org/sonar/plugins/tsql/checks/`:
+1. **Create the rule class** in `src/main/java/org/sonar/plugins/tsql/checks/`:
    ```java
    public class MyCustomCheck extends TSqlCheck {
        public static final String RULE_KEY = "S111_MyCustomRule";
 
        @Override
        public void enterSelect_stmt(TSqlParser.Select_stmtContext ctx) {
-           // logica di analisi AST
-           reportIssue(ctx, "Messaggio descrittivo della violazione");
+           // AST analysis logic
+           reportIssue(ctx, "Descriptive violation message");
        }
    }
    ```
-2. **Registra la regola** in:
-   - `TSqlRulesDefinition.java` (metadati, severità, tempo di remediation, tag)
-   - `TSqlQualityProfile.java` (attivazione nel profilo standard)
-   - `TSqlSensor.java` (mappatura `RULE_MAP`)
-3. **Aggiungi la documentazione HTML** in:
+2. **Register the rule** in:
+   - `TSqlRulesDefinition.java` (metadata, severity, remediation effort, and tags)
+   - `TSqlQualityProfile.java` (activation in the default profile)
+   - `TSqlSensor.java` (`RULE_MAP` mapping)
+3. **Add the HTML documentation** to:
    - `src/main/resources/org/sonar/l10n/tsql/rules/tsqlcommunity/S111_MyCustomRule.html`
-4. **Aggiungi i test unitari** in `src/test/java/org/sonar/plugins/tsql/TSqlChecksTest.java`.
+4. **Add unit tests** in `src/test/java/org/sonar/plugins/tsql/TSqlChecksTest.java`.
