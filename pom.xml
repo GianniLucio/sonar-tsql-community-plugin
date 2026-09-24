@@ -6,11 +6,11 @@
 
     <groupId>org.sonar.plugins.tsql</groupId>
     <artifactId>sonar-tsql-community-plugin</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
     <packaging>sonar-plugin</packaging>
 
-    <name>T-SQL and PostgreSQL Community Analyzer for SonarQube</name>
-    <description>SonarQube Community Edition plugin for analyzing Microsoft T-SQL and PostgreSQL scripts using ANTLR4 parser</description>
+    <name>SQL Community Analyzer for SonarQube</name>
+    <description>SonarQube Community Edition plugin for analyzing T-SQL, PostgreSQL, and Oracle SQL/PL-SQL scripts using ANTLR4 parsers</description>
     <url>https://github.com/GianniLucio/sonar-tsql-community-plugin</url>
 
     <properties>
@@ -106,9 +106,9 @@
                 <extensions>true</extensions>
                 <configuration>
                     <pluginKey>tsqlcommunity</pluginKey>
-                    <pluginName>T-SQL Community</pluginName>
+                    <pluginName>SQL Community</pluginName>
                     <pluginClass>org.sonar.plugins.tsql.TSqlPlugin</pluginClass>
-                    <pluginDescription>Microsoft T-SQL Static Code Analysis Plugin for SonarQube Community Edition</pluginDescription>
+                    <pluginDescription>T-SQL, PostgreSQL, and Oracle SQL static analysis plugin for SonarQube Community Edition</pluginDescription>
                     <sonarLintSupported>false</sonarLintSupported>
                 </configuration>
             </plugin>

@@ -9,6 +9,10 @@ import org.sonar.plugins.postgresql.PostgreSqlLanguage;
 import org.sonar.plugins.postgresql.PostgreSqlRulesDefinition;
 import org.sonar.plugins.postgresql.PostgreSqlQualityProfile;
 import org.sonar.plugins.postgresql.sensor.PostgreSqlSensor;
+import org.sonar.plugins.oracle.OracleLanguage;
+import org.sonar.plugins.oracle.OracleQualityProfile;
+import org.sonar.plugins.oracle.OracleRulesDefinition;
+import org.sonar.plugins.oracle.sensor.OracleSensor;
 
 public class TSqlPlugin implements Plugin {
 
@@ -35,6 +39,16 @@ public class TSqlPlugin implements Plugin {
                 // PostgreSQL Sensor
                 PostgreSqlSensor.class,
 
+                // Oracle Language
+                OracleLanguage.class,
+
+                // Oracle Rules and Profile
+                OracleRulesDefinition.class,
+                OracleQualityProfile.class,
+
+                // Oracle Sensor
+                OracleSensor.class,
+
                 // Configuration Properties - T-SQL
                 PropertyDefinition.builder(TSqlLanguage.FILE_SUFFIXES_KEY)
                         .name("T-SQL File Suffixes")
@@ -52,6 +66,17 @@ public class TSqlPlugin implements Plugin {
                         .description("List of file suffixes to analyze as PostgreSQL.")
                         .category("PostgreSQL")
                         .defaultValue(PostgreSqlLanguage.DEFAULT_FILE_SUFFIXES)
+                        .onQualifiers(Qualifiers.PROJECT)
+                        .type(PropertyType.STRING)
+                        .multiValues(true)
+                        .build(),
+
+                    // Configuration Properties - Oracle
+                    PropertyDefinition.builder(OracleLanguage.FILE_SUFFIXES_KEY)
+                        .name("Oracle File Suffixes")
+                        .description("List of file suffixes to analyze as Oracle SQL and PL/SQL.")
+                        .category("Oracle")
+                        .defaultValue(OracleLanguage.DEFAULT_FILE_SUFFIXES)
                         .onQualifiers(Qualifiers.PROJECT)
                         .type(PropertyType.STRING)
                         .multiValues(true)

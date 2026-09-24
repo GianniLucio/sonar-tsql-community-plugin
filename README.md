@@ -1,12 +1,12 @@
-# T-SQL and PostgreSQL Community Analyzer for SonarQube
+# SQL Community Analyzer for SonarQube
 
-Open-source SonarQube plugin for static analysis of Microsoft **T-SQL** and **PostgreSQL** code. Version `1.1.1` uses embedded ANTLR4 grammars and listener-based checks to produce AST-aware issues, NCLOC metrics, and comment-line metrics.
+Open-source SonarQube plugin for static analysis of Microsoft **T-SQL**, **PostgreSQL**, and **Oracle SQL/PL-SQL** code. Version `1.2.0` uses embedded ANTLR4 grammars and listener-based checks to produce AST-aware issues, NCLOC metrics, and comment-line metrics.
 
 The plugin targets SonarQube Community Edition `9.14+`, including compatible 10.x and LTS releases.
 
 ## Features
 
-- Separate SonarQube languages and quality profiles for T-SQL and PostgreSQL.
+- Separate SonarQube languages and quality profiles for T-SQL, PostgreSQL, and Oracle.
 - AST-based analysis through ANTLR4; checks are not driven by regular expressions.
 - SonarQube issue locations mapped to the relevant SQL syntax nodes.
 - NCLOC and comment-line metrics for both languages.
@@ -15,15 +15,16 @@ The plugin targets SonarQube Community Edition `9.14+`, including compatible 10.
   - window functions with `OVER`, `PARTITION BY`, frames, and `FILTER`;
   - CTEs with `WITH`, `RECURSIVE`, and materialization options;
   - arrays, array types, subscripts, constructors, casts, and operators such as `@>`, `<@`, and `&&`.
+- Oracle SQL and PL/SQL grammar support for common DML/DDL, `DECLARE ... BEGIN ... END` blocks, procedures, functions, packages, triggers, sequences, hierarchical queries, and Oracle SQL*Plus `/` separators.
 
 ## Installation
 
 ### From the GitHub release
 
-Download [`sonar-tsql-community-plugin-1.1.1.jar`](https://github.com/giannicordone/sonar-tsql-community-plugin/releases/download/v1.1.1/sonar-tsql-community-plugin-1.1.1.jar) from the [v1.1.1 release](https://github.com/giannicordone/sonar-tsql-community-plugin/releases/tag/v1.1.1), then copy it to the SonarQube plugins directory:
+Download [`sonar-tsql-community-plugin-1.2.0.jar`](https://github.com/giannicordone/sonar-tsql-community-plugin/releases/download/v1.2.0/sonar-tsql-community-plugin-1.2.0.jar) from the [v1.2.0 release](https://github.com/GianniLucio/sonar-tsql-community-plugin/releases/tag/v1.2.0), then copy it to the SonarQube plugins directory:
 
 ```bash
-cp sonar-tsql-community-plugin-1.1.1.jar "$SONARQUBE_HOME/extensions/plugins/"
+cp sonar-tsql-community-plugin-1.2.0.jar "$SONARQUBE_HOME/extensions/plugins/"
 ```
 
 Restart SonarQube after installing the plugin:
@@ -47,7 +48,7 @@ From the repository root:
 mvn clean package
 ```
 
-The generated plugin is `target/sonar-tsql-community-plugin-1.1.1.jar`.
+The generated plugin is `target/sonar-tsql-community-plugin-1.2.0.jar`.
 
 ## SonarScanner configuration
 
@@ -56,7 +57,7 @@ Create `sonar-project.properties` in the repository containing the SQL scripts:
 ```properties
 sonar.projectKey=my-database-project
 sonar.projectName=My Database Project
-sonar.projectVersion=1.1.1
+sonar.projectVersion=1.2.0
 sonar.sources=src/sql
 sonar.sourceEncoding=UTF-8
 ```
@@ -69,6 +70,9 @@ sonar.tsql.file.suffixes=.tsql
 
 # PostgreSQL defaults: .pgsql,.postgres
 sonar.pgsql.file.suffixes=.pgsql,.postgres
+
+# Oracle default: .oracle
+sonar.oracle.file.suffixes=.oracle
 ```
 
 For generic `.sql` files, configure the suffix for exactly one dialect in the project that owns them. For example, a PostgreSQL project can use:
@@ -76,6 +80,14 @@ For generic `.sql` files, configure the suffix for exactly one dialect in the pr
 ```properties
 sonar.pgsql.file.suffixes=.sql,.pgsql,.postgres
 sonar.tsql.file.suffixes=.tsql
+```
+
+For an Oracle project, assign `.sql` only to Oracle:
+
+```properties
+sonar.oracle.file.suffixes=.sql,.oracle
+sonar.tsql.file.suffixes=.tsql
+sonar.pgsql.file.suffixes=.pgsql,.postgres
 ```
 
 Run the analysis with SonarScanner:
@@ -115,6 +127,14 @@ Never assign the same suffix to both languages in the same SonarQube project. A 
 | `P108_MissingIndexOnForeignKey` | Bug | Major | Consider indexes for foreign-key columns. |
 | `P109_AvoidSerialDataType` | Code Smell | Minor | Prefer identity columns over `SERIAL`. |
 | `P110_UnloggedTableUsage` | Bug | Major | Use `UNLOGGED` tables cautiously. |
+
+## Oracle rules
+
+| Rule | Type | Severity | Description |
+|---|---|---|---|
+| `O101_AvoidSelectStar` | Code Smell | Major | Avoid `SELECT *` queries. |
+| `O102_TableWithoutPrimaryKey` | Bug | Critical | Define a primary key on created tables. |
+| `O103_UpperKeywords` | Code Smell | Info | Write Oracle SQL and PL/SQL keywords in uppercase. |
 
 ## Development
 
