@@ -110,6 +110,26 @@ public class PostgreSqlChecksTest {
     }
 
     @Test
+    public void testDmlWithoutWhere() {
+        DmlWithoutWhereCheck check = new DmlWithoutWhereCheck();
+        String content = "UPDATE users SET active = false;\nDELETE FROM audit_log;";
+        assertThat(scanWithCheck(content, check)).hasSize(2);
+
+        check = new DmlWithoutWhereCheck();
+        content = "UPDATE users SET active = false WHERE id = 1;\nDELETE FROM audit_log WHERE id = 1;";
+        assertThat(scanWithCheck(content, check)).isEmpty();
+    }
+
+    @Test
+    public void testLimitWithoutOrderBy() {
+        LimitWithoutOrderByCheck check = new LimitWithoutOrderByCheck();
+        assertThat(scanWithCheck("SELECT id FROM users LIMIT 10;", check)).hasSize(1);
+
+        check = new LimitWithoutOrderByCheck();
+        assertThat(scanWithCheck("SELECT id FROM users ORDER BY id LIMIT 10;", check)).isEmpty();
+    }
+
+    @Test
     public void testUpperKeywords() {
         UpperKeywordsCheck check = new UpperKeywordsCheck();
         String nonCompliant = "select id, name from users;";

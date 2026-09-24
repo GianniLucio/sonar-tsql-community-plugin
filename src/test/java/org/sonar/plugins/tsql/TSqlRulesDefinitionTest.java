@@ -17,7 +17,7 @@ class TSqlRulesDefinitionTest {
         assertThat(repo).isNotNull();
         assertThat(repo.name()).isEqualTo(TSqlRulesDefinition.REPOSITORY_NAME);
         assertThat(repo.language()).isEqualTo(TSqlLanguage.KEY);
-        assertThat(repo.rules()).hasSize(10);
+        assertThat(repo.rules()).hasSize(12);
 
         RulesDefinition.Rule selectStarRule = repo.rule("S101_AvoidSelectStar");
         assertThat(selectStarRule).isNotNull();

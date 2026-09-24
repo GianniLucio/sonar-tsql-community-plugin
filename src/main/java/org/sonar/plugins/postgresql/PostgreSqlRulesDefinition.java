@@ -70,6 +70,16 @@ public class PostgreSqlRulesDefinition implements RulesDefinition {
                 RuleType.BUG, Severity.MAJOR, "20min",
                 "sql", "reliability", "performance");
 
+        defineRule(repository, DmlWithoutWhereCheck.RULE_KEY,
+                "UPDATE and DELETE statements should use a WHERE clause",
+                RuleType.BUG, Severity.CRITICAL, "15min",
+                "sql", "data-integrity", "safety");
+
+        defineRule(repository, LimitWithoutOrderByCheck.RULE_KEY,
+                "LIMIT and OFFSET queries should use ORDER BY",
+                RuleType.BUG, Severity.MAJOR, "10min",
+                "sql", "determinism", "pagination");
+
         repository.done();
     }
 

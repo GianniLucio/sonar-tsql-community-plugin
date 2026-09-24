@@ -5,6 +5,7 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.plugins.oracle.checks.AvoidSelectStarCheck;
+import org.sonar.plugins.oracle.checks.DmlWithoutWhereCheck;
 import org.sonar.plugins.oracle.checks.TableWithoutPrimaryKeyCheck;
 import org.sonar.plugins.oracle.checks.UpperKeywordsCheck;
 
@@ -28,6 +29,9 @@ public class OracleRulesDefinition implements RulesDefinition {
                 RuleType.BUG, Severity.CRITICAL, "20min", "sql", "database-design");
         defineRule(repository, UpperKeywordsCheck.RULE_KEY, "Keywords should be in UPPERCASE",
                 RuleType.CODE_SMELL, Severity.INFO, "1min", "sql", "formatting");
+        defineRule(repository, DmlWithoutWhereCheck.RULE_KEY,
+            "UPDATE and DELETE statements should use a WHERE clause",
+            RuleType.BUG, Severity.CRITICAL, "15min", "sql", "data-integrity", "safety");
 
         repository.done();
     }

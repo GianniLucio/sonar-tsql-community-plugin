@@ -44,6 +44,8 @@ public class TSqlSensor implements Sensor {
         RULE_MAP.put(AvoidOrderByOrdinalCheck.RULE_KEY, AvoidOrderByOrdinalCheck.class);
         RULE_MAP.put(TableWithoutPrimaryKeyCheck.RULE_KEY, TableWithoutPrimaryKeyCheck.class);
         RULE_MAP.put(UpperKeywordsCheck.RULE_KEY, UpperKeywordsCheck.class);
+        RULE_MAP.put(DmlWithoutWhereCheck.RULE_KEY, DmlWithoutWhereCheck.class);
+        RULE_MAP.put(TopWithoutOrderByCheck.RULE_KEY, TopWithoutOrderByCheck.class);
     }
 
     @Override

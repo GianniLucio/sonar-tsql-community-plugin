@@ -16,6 +16,6 @@ class OracleRulesDefinitionTest {
         assertThat(repository).isNotNull();
         assertThat(repository.key()).isEqualTo("oraclecommunity");
         assertThat(repository.name()).isEqualTo("Oracle Community Rules");
-        assertThat(repository.rules()).hasSize(3);
+        assertThat(repository.rules()).hasSize(4);
     }
 }

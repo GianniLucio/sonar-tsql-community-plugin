@@ -44,6 +44,8 @@ public class PostgreSqlSensor implements Sensor {
         RULE_MAP.put(MissingIndexOnForeignKeyCheck.RULE_KEY, MissingIndexOnForeignKeyCheck.class);
         RULE_MAP.put(AvoidSerialDataTypeCheck.RULE_KEY, AvoidSerialDataTypeCheck.class);
         RULE_MAP.put(UnloggedTableUsageCheck.RULE_KEY, UnloggedTableUsageCheck.class);
+        RULE_MAP.put(DmlWithoutWhereCheck.RULE_KEY, DmlWithoutWhereCheck.class);
+        RULE_MAP.put(LimitWithoutOrderByCheck.RULE_KEY, LimitWithoutOrderByCheck.class);
     }
 
     @Override

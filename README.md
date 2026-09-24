@@ -1,6 +1,6 @@
 # SQL Community Analyzer for SonarQube
 
-Open-source SonarQube plugin for static analysis of Microsoft **T-SQL**, **PostgreSQL**, and **Oracle SQL/PL-SQL** code. Version `1.2.0` uses embedded ANTLR4 grammars and listener-based checks to produce AST-aware issues, NCLOC metrics, and comment-line metrics.
+Open-source SonarQube plugin for static analysis of Microsoft **T-SQL**, **PostgreSQL**, and **Oracle SQL/PL-SQL** code. Version `1.3.0` uses embedded ANTLR4 grammars and listener-based checks to produce AST-aware issues, NCLOC metrics, and comment-line metrics.
 
 The plugin targets SonarQube Community Edition `9.14+`, including compatible 10.x and LTS releases.
 
@@ -21,10 +21,10 @@ The plugin targets SonarQube Community Edition `9.14+`, including compatible 10.
 
 ### From the GitHub release
 
-Download [`sonar-tsql-community-plugin-1.2.0.jar`](https://github.com/giannicordone/sonar-tsql-community-plugin/releases/download/v1.2.0/sonar-tsql-community-plugin-1.2.0.jar) from the [v1.2.0 release](https://github.com/GianniLucio/sonar-tsql-community-plugin/releases/tag/v1.2.0), then copy it to the SonarQube plugins directory:
+Download [`sonar-tsql-community-plugin-1.3.0.jar`](https://github.com/giannicordone/sonar-tsql-community-plugin/releases/download/v1.3.0/sonar-tsql-community-plugin-1.3.0.jar) from the [v1.3.0 release](https://github.com/GianniLucio/sonar-tsql-community-plugin/releases/tag/v1.3.0), then copy it to the SonarQube plugins directory:
 
 ```bash
-cp sonar-tsql-community-plugin-1.2.0.jar "$SONARQUBE_HOME/extensions/plugins/"
+cp sonar-tsql-community-plugin-1.3.0.jar "$SONARQUBE_HOME/extensions/plugins/"
 ```
 
 Restart SonarQube after installing the plugin:
@@ -48,7 +48,7 @@ From the repository root:
 mvn clean package
 ```
 
-The generated plugin is `target/sonar-tsql-community-plugin-1.2.0.jar`.
+The generated plugin is `target/sonar-tsql-community-plugin-1.3.0.jar`.
 
 ## SonarScanner configuration
 
@@ -57,7 +57,7 @@ Create `sonar-project.properties` in the repository containing the SQL scripts:
 ```properties
 sonar.projectKey=my-database-project
 sonar.projectName=My Database Project
-sonar.projectVersion=1.2.0
+sonar.projectVersion=1.3.0
 sonar.sources=src/sql
 sonar.sourceEncoding=UTF-8
 ```
@@ -112,6 +112,8 @@ Never assign the same suffix to both languages in the same SonarQube project. A 
 | `S108_AvoidOrderByOrdinal` | Code Smell | Minor | Avoid numeric ordinals in `ORDER BY`. |
 | `S109_TableWithoutPrimaryKey` | Bug | Critical | Define a primary key on created tables. |
 | `S110_UpperKeywords` | Code Smell | Info | Write SQL keywords in uppercase. |
+| `S111_DmlWithoutWhere` | Bug | Critical | Require a `WHERE` clause on `UPDATE` and `DELETE`. |
+| `S112_TopWithoutOrderBy` | Bug | Major | Require `ORDER BY` when using `TOP`. |
 
 ## PostgreSQL rules
 
@@ -127,6 +129,8 @@ Never assign the same suffix to both languages in the same SonarQube project. A 
 | `P108_MissingIndexOnForeignKey` | Bug | Major | Consider indexes for foreign-key columns. |
 | `P109_AvoidSerialDataType` | Code Smell | Minor | Prefer identity columns over `SERIAL`. |
 | `P110_UnloggedTableUsage` | Bug | Major | Use `UNLOGGED` tables cautiously. |
+| `P111_DmlWithoutWhere` | Bug | Critical | Require a `WHERE` clause on `UPDATE` and `DELETE`. |
+| `P112_LimitWithoutOrderBy` | Bug | Major | Require `ORDER BY` when using `LIMIT` or `OFFSET`. |
 
 ## Oracle rules
 
@@ -135,6 +139,7 @@ Never assign the same suffix to both languages in the same SonarQube project. A 
 | `O101_AvoidSelectStar` | Code Smell | Major | Avoid `SELECT *` queries. |
 | `O102_TableWithoutPrimaryKey` | Bug | Critical | Define a primary key on created tables. |
 | `O103_UpperKeywords` | Code Smell | Info | Write Oracle SQL and PL/SQL keywords in uppercase. |
+| `O104_DmlWithoutWhere` | Bug | Critical | Require a `WHERE` clause on `UPDATE` and `DELETE`. |
 
 ## Development
 

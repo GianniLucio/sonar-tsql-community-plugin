@@ -22,6 +22,8 @@ public class PostgreSqlQualityProfile implements BuiltInQualityProfilesDefinitio
         profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, MissingIndexOnForeignKeyCheck.RULE_KEY);
         profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, AvoidSerialDataTypeCheck.RULE_KEY);
         profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, UnloggedTableUsageCheck.RULE_KEY);
+        profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, DmlWithoutWhereCheck.RULE_KEY);
+        profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, LimitWithoutOrderByCheck.RULE_KEY);
 
         profile.done();
     }

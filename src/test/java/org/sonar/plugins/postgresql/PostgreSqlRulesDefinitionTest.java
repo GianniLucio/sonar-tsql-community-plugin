@@ -17,6 +17,6 @@ public class PostgreSqlRulesDefinitionTest {
         assertThat(repository).isNotNull();
         assertThat(repository.key()).isEqualTo("pgsqlcommunity");
         assertThat(repository.name()).isEqualTo("PostgreSQL Community Rules");
-        assertThat(repository.rules()).hasSize(10);
+        assertThat(repository.rules()).hasSize(12);
     }
 }

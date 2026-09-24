@@ -2,6 +2,7 @@ package org.sonar.plugins.oracle;
 
 import org.sonar.api.server.profile.BuiltInQualityProfilesDefinition;
 import org.sonar.plugins.oracle.checks.AvoidSelectStarCheck;
+import org.sonar.plugins.oracle.checks.DmlWithoutWhereCheck;
 import org.sonar.plugins.oracle.checks.TableWithoutPrimaryKeyCheck;
 import org.sonar.plugins.oracle.checks.UpperKeywordsCheck;
 
@@ -16,6 +17,7 @@ public class OracleQualityProfile implements BuiltInQualityProfilesDefinition {
         profile.activateRule(OracleRulesDefinition.REPOSITORY_KEY, AvoidSelectStarCheck.RULE_KEY);
         profile.activateRule(OracleRulesDefinition.REPOSITORY_KEY, TableWithoutPrimaryKeyCheck.RULE_KEY);
         profile.activateRule(OracleRulesDefinition.REPOSITORY_KEY, UpperKeywordsCheck.RULE_KEY);
+        profile.activateRule(OracleRulesDefinition.REPOSITORY_KEY, DmlWithoutWhereCheck.RULE_KEY);
         profile.done();
     }
 }

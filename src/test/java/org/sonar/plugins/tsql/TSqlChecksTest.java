@@ -137,4 +137,24 @@ class TSqlChecksTest {
         String compliant = "SELECT Col1 FROM dbo.T;";
         assertThat(scanWithCheck(compliant, check)).isEmpty();
     }
+
+    @Test
+    void testDmlWithoutWhere() {
+        DmlWithoutWhereCheck check = new DmlWithoutWhereCheck();
+        String nonCompliant = "UPDATE dbo.Users SET IsActive = 0;\nDELETE FROM dbo.AuditLog;";
+        assertThat(scanWithCheck(nonCompliant, check)).hasSize(2);
+
+        check = new DmlWithoutWhereCheck();
+        String compliant = "UPDATE dbo.Users SET IsActive = 0 WHERE UserID = 1;\nDELETE FROM dbo.AuditLog WHERE AuditID = 1;";
+        assertThat(scanWithCheck(compliant, check)).isEmpty();
+    }
+
+    @Test
+    void testTopWithoutOrderBy() {
+        TopWithoutOrderByCheck check = new TopWithoutOrderByCheck();
+        assertThat(scanWithCheck("SELECT TOP 10 ID FROM dbo.Users;", check)).hasSize(1);
+
+        check = new TopWithoutOrderByCheck();
+        assertThat(scanWithCheck("SELECT TOP 10 ID FROM dbo.Users ORDER BY ID;", check)).isEmpty();
+    }
 }

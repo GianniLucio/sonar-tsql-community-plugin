@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.sonar.plugins.oracle.ast.OracleAstScanner;
 import org.sonar.plugins.oracle.ast.OracleCheck;
 import org.sonar.plugins.oracle.checks.AvoidSelectStarCheck;
+import org.sonar.plugins.oracle.checks.DmlWithoutWhereCheck;
 import org.sonar.plugins.oracle.checks.TableWithoutPrimaryKeyCheck;
 import org.sonar.plugins.oracle.checks.UpperKeywordsCheck;
 
@@ -66,5 +67,17 @@ class OracleChecksTest {
         scan("select id from employees;", check);
 
         assertThat(check.getIssues()).isNotEmpty();
+    }
+
+    @Test
+    void detectsDmlWithoutWhere() {
+        DmlWithoutWhereCheck check = new DmlWithoutWhereCheck();
+        scan("UPDATE employees SET active = 0; DELETE FROM audit_log;", check);
+
+        assertThat(check.getIssues()).hasSize(2);
+
+        check = new DmlWithoutWhereCheck();
+        scan("UPDATE employees SET active = 0 WHERE employee_id = 1; DELETE FROM audit_log WHERE id = 1;", check);
+        assertThat(check.getIssues()).isEmpty();
     }
 }

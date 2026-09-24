@@ -70,6 +70,16 @@ public class TSqlRulesDefinition implements RulesDefinition {
                 RuleType.CODE_SMELL, Severity.INFO, "1min",
                 "sql", "convention", "formatting");
 
+        defineRule(repository, DmlWithoutWhereCheck.RULE_KEY,
+                "UPDATE and DELETE statements should use a WHERE clause",
+                RuleType.BUG, Severity.CRITICAL, "15min",
+                "sql", "data-integrity", "safety");
+
+        defineRule(repository, TopWithoutOrderByCheck.RULE_KEY,
+                "TOP queries should use ORDER BY",
+                RuleType.BUG, Severity.MAJOR, "10min",
+                "sql", "determinism", "pagination");
+
         repository.done();
     }
 

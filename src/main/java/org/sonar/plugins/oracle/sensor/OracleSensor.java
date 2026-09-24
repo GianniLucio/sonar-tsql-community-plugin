@@ -19,6 +19,7 @@ import org.sonar.plugins.oracle.ast.IssueLocation;
 import org.sonar.plugins.oracle.ast.OracleAstScanner;
 import org.sonar.plugins.oracle.ast.OracleCheck;
 import org.sonar.plugins.oracle.checks.AvoidSelectStarCheck;
+import org.sonar.plugins.oracle.checks.DmlWithoutWhereCheck;
 import org.sonar.plugins.oracle.checks.TableWithoutPrimaryKeyCheck;
 import org.sonar.plugins.oracle.checks.UpperKeywordsCheck;
 
@@ -38,6 +39,7 @@ public class OracleSensor implements Sensor {
         RULE_MAP.put(AvoidSelectStarCheck.RULE_KEY, AvoidSelectStarCheck.class);
         RULE_MAP.put(TableWithoutPrimaryKeyCheck.RULE_KEY, TableWithoutPrimaryKeyCheck.class);
         RULE_MAP.put(UpperKeywordsCheck.RULE_KEY, UpperKeywordsCheck.class);
+        RULE_MAP.put(DmlWithoutWhereCheck.RULE_KEY, DmlWithoutWhereCheck.class);
     }
 
     @Override
