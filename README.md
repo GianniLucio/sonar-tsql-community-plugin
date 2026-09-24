@@ -1,6 +1,6 @@
 # T-SQL and PostgreSQL Community Analyzer for SonarQube
 
-Open-source SonarQube plugin for static analysis of Microsoft **T-SQL** and **PostgreSQL** code. Version `1.1.0` uses embedded ANTLR4 grammars and listener-based checks to produce AST-aware issues, NCLOC metrics, and comment-line metrics.
+Open-source SonarQube plugin for static analysis of Microsoft **T-SQL** and **PostgreSQL** code. Version `1.1.1` uses embedded ANTLR4 grammars and listener-based checks to produce AST-aware issues, NCLOC metrics, and comment-line metrics.
 
 The plugin targets SonarQube Community Edition `9.14+`, including compatible 10.x and LTS releases.
 
@@ -20,10 +20,10 @@ The plugin targets SonarQube Community Edition `9.14+`, including compatible 10.
 
 ### From the GitHub release
 
-Download [`sonar-tsql-community-plugin-1.1.0.jar`](https://github.com/giannicordone/sonar-tsql-community-plugin/releases/download/v1.1.0/sonar-tsql-community-plugin-1.1.0.jar) from the [v1.1.0 release](https://github.com/giannicordone/sonar-tsql-community-plugin/releases/tag/v1.1.0), then copy it to the SonarQube plugins directory:
+Download [`sonar-tsql-community-plugin-1.1.1.jar`](https://github.com/giannicordone/sonar-tsql-community-plugin/releases/download/v1.1.1/sonar-tsql-community-plugin-1.1.1.jar) from the [v1.1.1 release](https://github.com/giannicordone/sonar-tsql-community-plugin/releases/tag/v1.1.1), then copy it to the SonarQube plugins directory:
 
 ```bash
-cp sonar-tsql-community-plugin-1.1.0.jar "$SONARQUBE_HOME/extensions/plugins/"
+cp sonar-tsql-community-plugin-1.1.1.jar "$SONARQUBE_HOME/extensions/plugins/"
 ```
 
 Restart SonarQube after installing the plugin:
@@ -47,7 +47,7 @@ From the repository root:
 mvn clean package
 ```
 
-The generated plugin is `target/sonar-tsql-community-plugin-1.1.0.jar`.
+The generated plugin is `target/sonar-tsql-community-plugin-1.1.1.jar`.
 
 ## SonarScanner configuration
 
@@ -56,7 +56,7 @@ Create `sonar-project.properties` in the repository containing the SQL scripts:
 ```properties
 sonar.projectKey=my-database-project
 sonar.projectName=My Database Project
-sonar.projectVersion=1.1.0
+sonar.projectVersion=1.1.1
 sonar.sources=src/sql
 sonar.sourceEncoding=UTF-8
 ```
