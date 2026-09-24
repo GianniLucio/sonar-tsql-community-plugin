@@ -58,9 +58,9 @@ insertStatement
       (VALUES LPAREN expressionList RPAREN | selectStatement)
     ;
 
-updateStatement: UPDATE tableName SET assignmentList (WHERE expression)?;
+updateStatement: UPDATE tableName SET assignmentList (WHERE whereExpression=expression)?;
 
-deleteStatement: DELETE FROM tableName (WHERE expression)?;
+deleteStatement: DELETE FROM tableName (WHERE whereExpression=expression)?;
 
 mergeStatement
     : MERGE INTO tableName USING tableReference ON expression
