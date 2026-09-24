@@ -1,0 +1,29 @@
+<p><code>UNLOGGED</code> tables are not crash-safe and lose data in the event of a server crash or shutdown.</p>
+<ul>
+  <li><strong>Durability</strong>: Data is not written to the write-ahead log (WAL)</li>
+  <li><strong>Performance</strong>: Faster writes but unreliable</li>
+  <li><strong>Use Cases</strong>: Only suitable for temporary, non-critical data</li>
+  <li><strong>Risk</strong>: Complete data loss on unscheduled shutdown</li>
+</ul>
+<p><strong>Recommendation:</strong> Use UNLOGGED tables only for temporary working tables, not for permanent data.</p>
+<h3>Noncompliant Code:</h3>
+<pre><code>CREATE UNLOGGED TABLE production_data (
+  id SERIAL PRIMARY KEY,
+  customer_id INT,
+  order_amount DECIMAL
+);
+</code></pre>
+<h3>Compliant Code:</h3>
+<pre><code>-- For temporary data only:
+CREATE UNLOGGED TABLE temp_staging (
+  id SERIAL PRIMARY KEY,
+  raw_data TEXT
+);
+
+-- For production data:
+CREATE TABLE production_data (
+  id SERIAL PRIMARY KEY,
+  customer_id INT,
+  order_amount DECIMAL
+);
+</code></pre>

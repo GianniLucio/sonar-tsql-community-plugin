@@ -1,0 +1,18 @@
+<p>Building dynamic SQL by concatenating strings is vulnerable to SQL injection attacks.</p>
+<ul>
+  <li><strong>Security Risk (CWE-89)</strong>: Attacker can inject malicious SQL code</li>
+  <li><strong>OWASP A1</strong>: Injection is listed as a top security vulnerability</li>
+  <li><strong>Data Loss</strong>: Unauthorized database access or modification</li>
+</ul>
+<p><strong>Recommendation:</strong> Use parameterized queries (prepared statements) instead.</p>
+<h3>Noncompliant Code:</h3>
+<pre><code>EXECUTE 'SELECT * FROM users WHERE id = ' || user_id;
+query = "SELECT * FROM users WHERE name = '" + name + "'";
+</code></pre>
+<h3>Compliant Code:</h3>
+<pre><code>PREPARE stmt AS SELECT * FROM users WHERE id = $1;
+EXECUTE stmt(user_id);
+
+-- Or using dynamic SQL safely:
+EXECUTE format('SELECT * FROM users WHERE id = %L', user_id);
+</code></pre>

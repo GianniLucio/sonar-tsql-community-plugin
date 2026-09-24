@@ -1,0 +1,15 @@
+<p>Using ordinal column numbers in <code>ORDER BY</code> reduces query clarity and maintainability.</p>
+<ul>
+  <li><strong>Readability</strong>: Column names are clearer than numbers</li>
+  <li><strong>Maintenance</strong>: Adding/removing columns can break sorting unexpectedly</li>
+  <li><strong>Best Practice</strong>: SQL best practices recommend explicit column names</li>
+</ul>
+<p><strong>Recommendation:</strong> Use explicit column names instead of ordinal numbers.</p>
+<h3>Noncompliant Code:</h3>
+<pre><code>SELECT id, name, email FROM users ORDER BY 1, 2;
+SELECT id, name FROM employees ORDER BY 3 DESC;
+</code></pre>
+<h3>Compliant Code:</h3>
+<pre><code>SELECT id, name, email FROM users ORDER BY id, name;
+SELECT id, name FROM employees ORDER BY salary DESC;
+</code></pre>

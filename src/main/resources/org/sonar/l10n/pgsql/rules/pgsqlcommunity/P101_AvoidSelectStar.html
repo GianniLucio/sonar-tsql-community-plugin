@@ -1,0 +1,15 @@
+<p>Using <code>SELECT *</code> returns all columns in a table, which can lead to several problems:</p>
+<ul>
+  <li><strong>Performance</strong>: Unnecessary columns are fetched, increasing I/O and network overhead</li>
+  <li><strong>Maintainability</strong>: Adding columns to the table changes query behavior unexpectedly</li>
+  <li><strong>Security</strong>: Sensitive columns may be unintentionally exposed</li>
+</ul>
+<p><strong>Recommendation:</strong> Always explicitly specify the column names you need.</p>
+<h3>Noncompliant Code:</h3>
+<pre><code>SELECT * FROM users;
+SELECT u.* FROM users u;
+</code></pre>
+<h3>Compliant Code:</h3>
+<pre><code>SELECT id, name, email FROM users;
+SELECT u.id, u.name, u.email FROM users u;
+</code></pre>

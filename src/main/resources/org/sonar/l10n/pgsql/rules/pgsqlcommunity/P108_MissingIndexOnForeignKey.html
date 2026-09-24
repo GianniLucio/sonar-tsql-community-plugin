@@ -1,0 +1,23 @@
+<p>Foreign key columns should have indexes for optimal query performance.</p>
+<ul>
+  <li><strong>Performance</strong>: Indexes speed up JOIN operations and foreign key lookups</li>
+  <li><strong>Referential Integrity</strong>: Faster constraint validation</li>
+  <li><strong>Best Practice</strong>: Standard database optimization technique</li>
+</ul>
+<p><strong>Recommendation:</strong> Create indexes on columns that are part of foreign key constraints.</p>
+<h3>Noncompliant Code:</h3>
+<pre><code>CREATE TABLE orders (
+  id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES users(id),
+  amount DECIMAL
+);
+-- No index on user_id
+</code></pre>
+<h3>Compliant Code:</h3>
+<pre><code>CREATE TABLE orders (
+  id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES users(id),
+  amount DECIMAL
+);
+CREATE INDEX idx_orders_user_id ON orders(user_id);
+</code></pre>

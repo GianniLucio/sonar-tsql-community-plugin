@@ -1,0 +1,16 @@
+<p>Using procedural <code>CURSOR</code> in PostgreSQL is generally less efficient than set-based operations.</p>
+<ul>
+  <li><strong>Performance</strong>: Cursors process rows one at a time, avoiding query optimizer benefits</li>
+  <li><strong>Complexity</strong>: Code becomes harder to maintain and understand</li>
+  <li><strong>Resource Usage</strong>: Cursors consume more memory and locks</li>
+</ul>
+<p><strong>Recommendation:</strong> Use set-based operations (JOINs, window functions, CTEs) whenever possible.</p>
+<h3>Noncompliant Code:</h3>
+<pre><code>DECLARE user_cursor CURSOR FOR SELECT * FROM users;
+OPEN user_cursor;
+FETCH NEXT FROM user_cursor INTO @user_id;
+</code></pre>
+<h3>Compliant Code:</h3>
+<pre><code>SELECT id, name FROM users;
+-- Use set-based operations or language-level iteration
+</code></pre>

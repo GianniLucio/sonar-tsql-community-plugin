@@ -1,0 +1,15 @@
+<p>Terminating statements with a semicolon is the SQL standard and required by PostgreSQL in many contexts.</p>
+<ul>
+  <li><strong>Clarity</strong>: Semicolons make statement boundaries explicit</li>
+  <li><strong>Compatibility</strong>: Some tools and drivers expect semicolons</li>
+  <li><strong>Best Practice</strong>: Recommended by SQL standards</li>
+</ul>
+<p><strong>Recommendation:</strong> Always terminate SQL statements with a semicolon.</p>
+<h3>Noncompliant Code:</h3>
+<pre><code>SELECT id, name FROM users
+INSERT INTO logs VALUES (1)
+</code></pre>
+<h3>Compliant Code:</h3>
+<pre><code>SELECT id, name FROM users;
+INSERT INTO logs VALUES (1);
+</code></pre>

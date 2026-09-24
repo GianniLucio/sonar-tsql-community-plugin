@@ -1,0 +1,28 @@
+<p>Every table should define a PRIMARY KEY to ensure data integrity and enable efficient queries.</p>
+<ul>
+  <li><strong>Data Integrity</strong>: PRIMARY KEY prevents duplicate or NULL rows</li>
+  <li><strong>Performance</strong>: Automatically creates an index for faster lookups</li>
+  <li><strong>Relationships</strong>: Required for foreign key constraints</li>
+  <li><strong>Best Practice</strong>: Industry standard database design</li>
+</ul>
+<p><strong>Recommendation:</strong> Define a PRIMARY KEY for every table.</p>
+<h3>Noncompliant Code:</h3>
+<pre><code>CREATE TABLE users (
+  id INT,
+  name VARCHAR(100),
+  email VARCHAR(100)
+);
+</code></pre>
+<h3>Compliant Code:</h3>
+<pre><code>CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100)
+);
+-- Or using GENERATED:
+CREATE TABLE users (
+  id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100)
+);
+</code></pre>

@@ -1,0 +1,15 @@
+<p>SQL keywords should be written in UPPERCASE for consistent style and improved readability.</p>
+<ul>
+  <li><strong>Consistency</strong>: Uniform code style across projects</li>
+  <li><strong>Readability</strong>: Keywords stand out from identifiers and values</li>
+  <li><strong>Best Practice</strong>: Industry standard convention</li>
+</ul>
+<p><strong>Recommendation:</strong> Use UPPERCASE for all SQL keywords.</p>
+<h3>Noncompliant Code:</h3>
+<pre><code>select id, name from users where active = true;
+insert into logs values (1, 'test');
+</code></pre>
+<h3>Compliant Code:</h3>
+<pre><code>SELECT id, name FROM users WHERE active = TRUE;
+INSERT INTO logs VALUES (1, 'test');
+</code></pre>
