@@ -13,7 +13,7 @@ public class PostgreSqlLanguage extends AbstractLanguage {
     public static final String KEY = "pgsql";
     public static final String NAME = "PostgreSQL";
     public static final String FILE_SUFFIXES_KEY = "sonar.pgsql.file.suffixes";
-    public static final String DEFAULT_FILE_SUFFIXES = ".sql,.pgsql,.postgres";
+    public static final String DEFAULT_FILE_SUFFIXES = ".pgsql,.postgres";
 
     private final Configuration configuration;
 

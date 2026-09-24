@@ -61,14 +61,21 @@ sonar.sources=src/sql
 sonar.sourceEncoding=UTF-8
 ```
 
-Use the language-specific suffix properties when the defaults do not match your files:
+The defaults are intentionally disjoint so SonarQube can classify files without ambiguity:
 
 ```properties
-# T-SQL defaults: .sql,.tsql
-sonar.tsql.file.suffixes=.sql,.tsql
+# T-SQL default: .tsql
+sonar.tsql.file.suffixes=.tsql
 
-# PostgreSQL defaults: .sql,.pgsql,.postgres
+# PostgreSQL defaults: .pgsql,.postgres
+sonar.pgsql.file.suffixes=.pgsql,.postgres
+```
+
+For generic `.sql` files, configure the suffix for exactly one dialect in the project that owns them. For example, a PostgreSQL project can use:
+
+```properties
 sonar.pgsql.file.suffixes=.sql,.pgsql,.postgres
+sonar.tsql.file.suffixes=.tsql
 ```
 
 Run the analysis with SonarScanner:
@@ -77,7 +84,7 @@ Run the analysis with SonarScanner:
 sonar-scanner
 ```
 
-Avoid assigning the same suffix to both languages in one project unless the files are separated through project configuration, because `.sql` is recognized by both language definitions by default.
+Never assign the same suffix to both languages in the same SonarQube project. A file matching both language patterns causes the analysis to fail because SonarQube cannot decide which language owns it. Oracle scripts should be excluded or analyzed in a project using an Oracle analyzer.
 
 ## T-SQL rules
 

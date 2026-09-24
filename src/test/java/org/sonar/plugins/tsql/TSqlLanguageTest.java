@@ -19,7 +19,7 @@ class TSqlLanguageTest {
         TSqlLanguage language = new TSqlLanguage(config);
         assertThat(language.getKey()).isEqualTo("tsql");
         assertThat(language.getName()).isEqualTo("T-SQL");
-        assertThat(language.getFileSuffixes()).containsExactly(".sql", ".tsql");
+        assertThat(language.getFileSuffixes()).containsExactly(".tsql");
     }
 
     @Test

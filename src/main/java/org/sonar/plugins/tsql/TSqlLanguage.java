@@ -14,7 +14,7 @@ public class TSqlLanguage extends AbstractLanguage {
     public static final String KEY = "tsql";
     public static final String NAME = "T-SQL";
     public static final String FILE_SUFFIXES_KEY = "sonar.tsql.file.suffixes";
-    public static final String DEFAULT_FILE_SUFFIXES = ".sql,.tsql";
+    public static final String DEFAULT_FILE_SUFFIXES = ".tsql";
 
     private final Configuration configuration;
 

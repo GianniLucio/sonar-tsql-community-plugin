@@ -34,7 +34,7 @@ public class PostgreSqlLanguageTest {
 
         PostgreSqlLanguage language = new PostgreSqlLanguage(config);
         String[] suffixes = language.getFileSuffixes();
-        assertThat(suffixes).contains(".sql", ".pgsql", ".postgres");
+        assertThat(suffixes).containsExactly(".pgsql", ".postgres");
     }
 
     @Test
