@@ -1,0 +1,25 @@
+<h2>Why is this an issue?</h2>
+<p>A <code>WHEN OTHERS</code> exception handler that does not re-raise the exception (with <code>RAISE;</code> or <code>RAISE_APPLICATION_ERROR</code>) silently swallows every unexpected error, including ones the code was not designed to handle. This hides bugs and makes production incidents very hard to diagnose.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+BEGIN
+  do_something();
+EXCEPTION
+  WHEN OTHERS THEN
+    NULL;
+END;
+/
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+BEGIN
+  do_something();
+EXCEPTION
+  WHEN OTHERS THEN
+    log_error(SQLCODE, SQLERRM);
+    RAISE;
+END;
+/
+</pre>

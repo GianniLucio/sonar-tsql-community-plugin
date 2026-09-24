@@ -1,0 +1,12 @@
+<h2>Why is this an issue?</h2>
+<p><code>ROWNUM</code> is assigned to rows as they are produced by the execution plan, <b>before</b> any <code>ORDER BY</code> is applied. Filtering or selecting <code>ROWNUM</code> in a query without an explicit <code>ORDER BY</code> therefore returns an arbitrary, non-deterministic subset of rows that can change between executions.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+SELECT * FROM (SELECT id, name FROM employees) WHERE ROWNUM &lt;= 10;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+SELECT * FROM (SELECT id, name FROM employees ORDER BY id) WHERE ROWNUM &lt;= 10;
+</pre>

@@ -46,6 +46,14 @@ public class TSqlSensor implements Sensor {
         RULE_MAP.put(UpperKeywordsCheck.RULE_KEY, UpperKeywordsCheck.class);
         RULE_MAP.put(DmlWithoutWhereCheck.RULE_KEY, DmlWithoutWhereCheck.class);
         RULE_MAP.put(TopWithoutOrderByCheck.RULE_KEY, TopWithoutOrderByCheck.class);
+        RULE_MAP.put(DeprecatedDataTypeCheck.RULE_KEY, DeprecatedDataTypeCheck.class);
+        RULE_MAP.put(AvoidPrintStatementCheck.RULE_KEY, AvoidPrintStatementCheck.class);
+        RULE_MAP.put(AvoidRaiserrorCheck.RULE_KEY, AvoidRaiserrorCheck.class);
+        RULE_MAP.put(CartesianProductCheck.RULE_KEY, CartesianProductCheck.class);
+        RULE_MAP.put(AvoidWhileLoopCheck.RULE_KEY, AvoidWhileLoopCheck.class);
+        RULE_MAP.put(ConvertWithoutStyleCheck.RULE_KEY, ConvertWithoutStyleCheck.class);
+        RULE_MAP.put(AvoidIndexHintCheck.RULE_KEY, AvoidIndexHintCheck.class);
+        RULE_MAP.put(ProcedureWithoutErrorHandlingCheck.RULE_KEY, ProcedureWithoutErrorHandlingCheck.class);
     }
 
     @Override

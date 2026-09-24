@@ -1,0 +1,11 @@
+<p>INSERT statements should specify an explicit column list.</p>
+<p>Relying on the implicit column order of the target table is fragile: adding, removing, or reordering columns in the
+table silently changes which value is assigned to which column, or breaks the statement altogether.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+INSERT INTO employees VALUES (1, 'John');
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+INSERT INTO employees (id, name) VALUES (1, 'John');
+</pre>

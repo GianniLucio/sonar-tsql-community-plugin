@@ -1,0 +1,13 @@
+<p><code>CREATE SEQUENCE</code> should explicitly specify <code>CACHE</code>/<code>NOCACHE</code> and <code>ORDER</code>/<code>NOORDER</code>.</p>
+<p>Leaving these clauses to the database default makes sequence behavior implicit and environment-dependent.
+Cached sequence values are lost on instance shutdown or in RAC environments, producing gaps; and unordered
+sequences do not guarantee monotonically increasing values across RAC instances. Specify both clauses explicitly
+so the intended behavior is documented and predictable.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+CREATE SEQUENCE order_seq;
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+CREATE SEQUENCE order_seq CACHE 20 ORDER;
+</pre>

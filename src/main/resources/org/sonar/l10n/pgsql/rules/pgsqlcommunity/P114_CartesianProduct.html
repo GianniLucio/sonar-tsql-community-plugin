@@ -1,0 +1,15 @@
+<h2>Why is this an issue?</h2>
+<p>Listing several tables in the <code>FROM</code> clause separated by commas, without a <code>WHERE</code> clause relating them, produces the full cartesian product of all rows. This is rarely intentional, can return an enormous number of rows, and usually indicates a missing join condition.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+SELECT o.id, c.name
+FROM orders o, customers c;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+SELECT o.id, c.name
+FROM orders o
+INNER JOIN customers c ON c.id = o.customer_id;
+</pre>

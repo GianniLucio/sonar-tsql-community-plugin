@@ -1,0 +1,12 @@
+<p>Avoid forcing a specific <code>INDEX</code> table hint.</p>
+<p>Forcing the query optimizer to use a particular index removes its ability to adapt the execution plan when data
+volumes, statistics, or indexes change. What was once an optimization can silently turn into a performance regression
+after a schema or data change.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+SELECT OrderId FROM dbo.Orders WITH (INDEX(IX_Orders_CustomerId));
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+SELECT OrderId FROM dbo.Orders;
+</pre>

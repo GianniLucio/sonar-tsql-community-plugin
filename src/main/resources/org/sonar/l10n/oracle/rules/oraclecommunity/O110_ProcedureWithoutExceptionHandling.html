@@ -1,0 +1,22 @@
+<p>Procedures and functions should define an <code>EXCEPTION</code> handling section.</p>
+<p>Without an <code>EXCEPTION</code> block, any runtime error inside the program unit propagates unhandled to the
+caller, with no opportunity to log context, clean up resources, or return a meaningful error to the client.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+CREATE OR REPLACE PROCEDURE update_balance AS
+BEGIN
+    UPDATE accounts SET balance = balance - 100 WHERE account_id = 1;
+END;
+/
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+CREATE OR REPLACE PROCEDURE update_balance AS
+BEGIN
+    UPDATE accounts SET balance = balance - 100 WHERE account_id = 1;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE;
+END;
+/
+</pre>

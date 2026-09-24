@@ -80,6 +80,46 @@ public class TSqlRulesDefinition implements RulesDefinition {
                 RuleType.BUG, Severity.MAJOR, "10min",
                 "sql", "determinism", "pagination");
 
+        defineRule(repository, DeprecatedDataTypeCheck.RULE_KEY,
+                "Avoid deprecated 'TEXT', 'NTEXT', and 'IMAGE' data types",
+                RuleType.CODE_SMELL, Severity.MAJOR, "15min",
+                "sql", "deprecated", "database-design");
+
+        defineRule(repository, AvoidPrintStatementCheck.RULE_KEY,
+                "Avoid using the PRINT statement",
+                RuleType.CODE_SMELL, Severity.MINOR, "5min",
+                "sql", "bad-practice", "observability");
+
+        defineRule(repository, AvoidRaiserrorCheck.RULE_KEY,
+                "Prefer THROW over RAISERROR",
+                RuleType.CODE_SMELL, Severity.MINOR, "10min",
+                "sql", "deprecated", "error-handling");
+
+        defineRule(repository, CartesianProductCheck.RULE_KEY,
+                "Comma-separated FROM tables without a WHERE clause should be avoided",
+                RuleType.BUG, Severity.CRITICAL, "20min",
+                "sql", "performance", "data-integrity");
+
+        defineRule(repository, AvoidWhileLoopCheck.RULE_KEY,
+                "Avoid procedural WHILE loops",
+                RuleType.CODE_SMELL, Severity.MAJOR, "30min",
+                "sql", "performance", "antipattern");
+
+        defineRule(repository, ConvertWithoutStyleCheck.RULE_KEY,
+                "CONVERT to a date/time type should specify an explicit style code",
+                RuleType.BUG, Severity.MINOR, "5min",
+                "sql", "reliability", "date-time");
+
+        defineRule(repository, AvoidIndexHintCheck.RULE_KEY,
+                "Avoid forcing a specific INDEX table hint",
+                RuleType.CODE_SMELL, Severity.MAJOR, "15min",
+                "sql", "performance", "bad-practice");
+
+        defineRule(repository, ProcedureWithoutErrorHandlingCheck.RULE_KEY,
+                "Stored procedures should handle errors with TRY...CATCH",
+                RuleType.BUG, Severity.CRITICAL, "20min",
+                "sql", "error-handling", "reliability");
+
         repository.done();
     }
 

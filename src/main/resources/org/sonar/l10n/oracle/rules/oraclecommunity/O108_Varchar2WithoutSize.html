@@ -1,0 +1,18 @@
+<h2>Why is this an issue?</h2>
+<p>Declaring a <code>VARCHAR2</code> column without an explicit size relies on an implementation-defined or session-dependent default. This can silently truncate data, behaves inconsistently across environments, and hides the intended maximum length from anyone reading the schema.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+CREATE TABLE employees (
+  id NUMBER PRIMARY KEY,
+  name VARCHAR2
+);
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+CREATE TABLE employees (
+  id NUMBER PRIMARY KEY,
+  name VARCHAR2(100)
+);
+</pre>

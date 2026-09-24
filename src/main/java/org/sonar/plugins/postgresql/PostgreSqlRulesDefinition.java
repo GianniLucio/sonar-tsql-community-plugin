@@ -80,6 +80,46 @@ public class PostgreSqlRulesDefinition implements RulesDefinition {
                 RuleType.BUG, Severity.MAJOR, "10min",
                 "sql", "determinism", "pagination");
 
+        defineRule(repository, OffsetWithoutLimitCheck.RULE_KEY,
+                "OFFSET queries should also use LIMIT",
+                RuleType.BUG, Severity.MAJOR, "10min",
+                "sql", "performance", "pagination");
+
+        defineRule(repository, CartesianProductCheck.RULE_KEY,
+                "Comma-separated FROM tables without a WHERE clause should be avoided",
+                RuleType.BUG, Severity.CRITICAL, "20min",
+                "sql", "performance", "data-integrity");
+
+        defineRule(repository, RedundantDistinctWithGroupByCheck.RULE_KEY,
+                "SELECT DISTINCT combined with GROUP BY is redundant",
+                RuleType.CODE_SMELL, Severity.MINOR, "5min",
+                "sql", "performance", "maintainability");
+
+        defineRule(repository, UselessCheckConstraintCheck.RULE_KEY,
+                "CHECK constraints should not always evaluate to true",
+                RuleType.BUG, Severity.MAJOR, "15min",
+                "sql", "database-design", "data-integrity");
+
+        defineRule(repository, LikeLeadingWildcardCheck.RULE_KEY,
+                "LIKE/ILIKE patterns should not start with a wildcard",
+                RuleType.CODE_SMELL, Severity.MAJOR, "10min",
+                "sql", "performance", "index");
+
+        defineRule(repository, NotInWithSubqueryCheck.RULE_KEY,
+                "Avoid NOT IN with a subquery",
+                RuleType.BUG, Severity.MAJOR, "15min",
+                "sql", "data-integrity", "null-handling");
+
+        defineRule(repository, DropWithoutIfExistsCheck.RULE_KEY,
+                "DROP COLUMN/DROP CONSTRAINT should use IF EXISTS",
+                RuleType.CODE_SMELL, Severity.MINOR, "5min",
+                "sql", "migration", "reliability");
+
+        defineRule(repository, ForeignKeyWithoutOnDeleteActionCheck.RULE_KEY,
+                "Foreign keys should declare an explicit ON DELETE action",
+                RuleType.CODE_SMELL, Severity.MINOR, "10min",
+                "sql", "database-design", "data-integrity");
+
         repository.done();
     }
 

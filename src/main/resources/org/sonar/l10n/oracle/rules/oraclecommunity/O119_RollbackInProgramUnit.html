@@ -1,0 +1,21 @@
+<p>Avoid issuing <code>ROLLBACK</code> inside a procedure, function, package, or trigger body.</p>
+<p>Program units should not control transaction boundaries that belong to the caller. A <code>ROLLBACK</code> issued
+deep inside reusable code silently discards work the caller did not expect to lose, and issuing it inside a
+trigger raises <code>ORA-04092</code> (cannot COMMIT/ROLLBACK in a trigger).</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+CREATE OR REPLACE PROCEDURE update_balance AS
+BEGIN
+    UPDATE accounts SET balance = balance - 100 WHERE account_id = 1;
+    ROLLBACK;
+END;
+/
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+CREATE OR REPLACE PROCEDURE update_balance AS
+BEGIN
+    UPDATE accounts SET balance = balance - 100 WHERE account_id = 1;
+END;
+/
+</pre>

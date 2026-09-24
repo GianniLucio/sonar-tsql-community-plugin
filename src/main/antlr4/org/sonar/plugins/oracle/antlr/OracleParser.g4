@@ -97,7 +97,22 @@ tableConstraint
     | (CONSTRAINT identifier)? CHECK LPAREN expression RPAREN
     ;
 
-createSequenceStatement: CREATE SEQUENCE identifier;
+createSequenceStatement: CREATE SEQUENCE identifier sequenceOption*;
+
+sequenceOption
+    : START WITH NUMBER
+    | INCREMENT BY NUMBER
+    | MAXVALUE NUMBER
+    | NOMAXVALUE
+    | MINVALUE NUMBER
+    | NOMINVALUE
+    | CACHE NUMBER
+    | NOCACHE
+    | CYCLE
+    | NOCYCLE
+    | ORDER
+    | NOORDER
+    ;
 
 alterTableStatement: ALTER TABLE tableName alterTableAction;
 

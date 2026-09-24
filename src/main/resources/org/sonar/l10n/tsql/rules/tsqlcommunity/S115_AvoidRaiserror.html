@@ -1,0 +1,12 @@
+<h2>Why is this an issue?</h2>
+<p><code>RAISERROR</code> has quirky formatting rules, does not preserve the original error's line number or procedure context reliably, and cannot be used to simply rethrow a caught error. <code>THROW</code>, introduced in SQL Server 2012, is simpler and rethrows the original exception when used without arguments inside a <code>CATCH</code> block.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+RAISERROR('Invalid order total', 16, 1);
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+THROW 51000, 'Invalid order total', 1;
+</pre>

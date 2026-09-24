@@ -1,0 +1,12 @@
+<p><code>CONVERT</code> to a date/time data type should specify an explicit style code.</p>
+<p>When the third, optional style argument of <code>CONVERT</code> is omitted, SQL Server falls back to a default style
+that depends on the connection's language and regional settings. The same code can therefore produce different
+results (or fail) depending on where and how it runs.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+SELECT CONVERT(DATETIME, @rawValue);
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+SELECT CONVERT(DATETIME, @rawValue, 120); -- ODBC canonical style, unambiguous
+</pre>

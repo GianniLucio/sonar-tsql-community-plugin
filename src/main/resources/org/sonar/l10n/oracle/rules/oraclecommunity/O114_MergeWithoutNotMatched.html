@@ -1,0 +1,16 @@
+<p><code>MERGE</code> should handle the <code>WHEN NOT MATCHED</code> case.</p>
+<p>A <code>MERGE</code> statement that only defines <code>WHEN MATCHED THEN UPDATE</code> silently ignores every source row
+that has no matching target row. This is often unintentional and results in missing inserts.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+MERGE INTO accounts a
+USING staging_accounts s ON (a.id = s.id)
+WHEN MATCHED THEN UPDATE SET a.balance = s.balance;
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+MERGE INTO accounts a
+USING staging_accounts s ON (a.id = s.id)
+WHEN MATCHED THEN UPDATE SET a.balance = s.balance
+WHEN NOT MATCHED THEN INSERT (id, balance) VALUES (s.id, s.balance);
+</pre>

@@ -1,0 +1,13 @@
+<h2>Why is this an issue?</h2>
+<p>The <code>PRINT</code> statement sends messages through the tabular data stream, which client drivers may buffer, ignore, or discard. It is not a reliable channel for diagnostics, auditing, or error handling, and application code cannot easily capture it.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+PRINT 'Processing started';
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+-- Use a logging table, extended events, or return the information via THROW/RAISERROR
+INSERT INTO dbo.ProcessLog (Message, LoggedAt) VALUES ('Processing started', GETUTCDATE());
+</pre>

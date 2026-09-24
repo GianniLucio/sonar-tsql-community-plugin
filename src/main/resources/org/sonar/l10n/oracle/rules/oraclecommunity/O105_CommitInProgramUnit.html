@@ -1,0 +1,22 @@
+<h2>Why is this an issue?</h2>
+<p>Issuing <code>COMMIT</code> inside a procedure, function, or package body hard-codes a transaction boundary decision that belongs to the caller. It can break the caller's ability to roll back a larger unit of work, causes partial commits when the program unit is called from within another transaction, and complicates error recovery.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+CREATE OR REPLACE PROCEDURE update_balance(p_id NUMBER) AS
+BEGIN
+  UPDATE accounts SET balance = balance - 1 WHERE id = p_id;
+  COMMIT;
+END;
+/
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+CREATE OR REPLACE PROCEDURE update_balance(p_id NUMBER) AS
+BEGIN
+  UPDATE accounts SET balance = balance - 1 WHERE id = p_id;
+  -- let the calling transaction decide when to COMMIT
+END;
+/
+</pre>

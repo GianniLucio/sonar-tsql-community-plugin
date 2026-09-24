@@ -46,6 +46,14 @@ public class PostgreSqlSensor implements Sensor {
         RULE_MAP.put(UnloggedTableUsageCheck.RULE_KEY, UnloggedTableUsageCheck.class);
         RULE_MAP.put(DmlWithoutWhereCheck.RULE_KEY, DmlWithoutWhereCheck.class);
         RULE_MAP.put(LimitWithoutOrderByCheck.RULE_KEY, LimitWithoutOrderByCheck.class);
+        RULE_MAP.put(OffsetWithoutLimitCheck.RULE_KEY, OffsetWithoutLimitCheck.class);
+        RULE_MAP.put(CartesianProductCheck.RULE_KEY, CartesianProductCheck.class);
+        RULE_MAP.put(RedundantDistinctWithGroupByCheck.RULE_KEY, RedundantDistinctWithGroupByCheck.class);
+        RULE_MAP.put(UselessCheckConstraintCheck.RULE_KEY, UselessCheckConstraintCheck.class);
+        RULE_MAP.put(LikeLeadingWildcardCheck.RULE_KEY, LikeLeadingWildcardCheck.class);
+        RULE_MAP.put(NotInWithSubqueryCheck.RULE_KEY, NotInWithSubqueryCheck.class);
+        RULE_MAP.put(DropWithoutIfExistsCheck.RULE_KEY, DropWithoutIfExistsCheck.class);
+        RULE_MAP.put(ForeignKeyWithoutOnDeleteActionCheck.RULE_KEY, ForeignKeyWithoutOnDeleteActionCheck.class);
     }
 
     @Override

@@ -1,0 +1,20 @@
+<p>Foreign key constraints should declare an explicit <code>ON DELETE</code> action.</p>
+<p>When <code>ON DELETE</code> is omitted, PostgreSQL defaults to <code>NO ACTION</code>: deleting a referenced row fails
+with a foreign key violation unless the application anticipated it. Declaring <code>CASCADE</code>, <code>SET NULL</code>,
+or explicitly keeping the default makes the intended referential behavior clear.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+CREATE TABLE orders (
+    id INT,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+CREATE TABLE orders (
+    id INT,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+</pre>

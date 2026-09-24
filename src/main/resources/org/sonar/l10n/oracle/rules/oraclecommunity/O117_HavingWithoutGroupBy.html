@@ -1,0 +1,12 @@
+<p><code>HAVING</code> should not be used without <code>GROUP BY</code>.</p>
+<p><code>HAVING</code> without a <code>GROUP BY</code> clause treats the entire result set as a single group, which is
+rarely the intent. In most cases the condition belongs in a <code>WHERE</code> clause, which also filters rows before
+aggregation and is more efficient.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+SELECT salary FROM employees HAVING salary &gt; 1000;
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+SELECT salary FROM employees WHERE salary &gt; 1000;
+</pre>

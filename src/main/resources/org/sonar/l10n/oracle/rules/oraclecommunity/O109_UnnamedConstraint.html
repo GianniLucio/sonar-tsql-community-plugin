@@ -1,0 +1,17 @@
+<p>Table constraints should be explicitly named.</p>
+<p>An unnamed constraint receives a system-generated name (e.g. <code>SYS_C0012345</code>) that gives no indication of its
+purpose and makes it harder to identify in error messages, scripts, or when altering/dropping the constraint later.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+CREATE TABLE employees (
+    id NUMBER,
+    PRIMARY KEY (id)
+);
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+CREATE TABLE employees (
+    id NUMBER,
+    CONSTRAINT pk_employees PRIMARY KEY (id)
+);
+</pre>

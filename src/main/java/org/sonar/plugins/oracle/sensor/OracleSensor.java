@@ -18,10 +18,26 @@ import org.sonar.plugins.oracle.OracleRulesDefinition;
 import org.sonar.plugins.oracle.ast.IssueLocation;
 import org.sonar.plugins.oracle.ast.OracleAstScanner;
 import org.sonar.plugins.oracle.ast.OracleCheck;
+import org.sonar.plugins.oracle.checks.AlterTableDropColumnCheck;
+import org.sonar.plugins.oracle.checks.AnonymousBlockWithoutExceptionHandlingCheck;
 import org.sonar.plugins.oracle.checks.AvoidSelectStarCheck;
+import org.sonar.plugins.oracle.checks.CheckConstraintNullComparisonCheck;
+import org.sonar.plugins.oracle.checks.CommitInProgramUnitCheck;
+import org.sonar.plugins.oracle.checks.ConnectByWithoutPriorCheck;
+import org.sonar.plugins.oracle.checks.CreateSequenceWithoutCacheOrderCheck;
 import org.sonar.plugins.oracle.checks.DmlWithoutWhereCheck;
+import org.sonar.plugins.oracle.checks.HavingWithoutGroupByCheck;
+import org.sonar.plugins.oracle.checks.InsertWithoutColumnListCheck;
+import org.sonar.plugins.oracle.checks.MergeWithoutNotMatchedCheck;
+import org.sonar.plugins.oracle.checks.ProcedureWithoutExceptionHandlingCheck;
+import org.sonar.plugins.oracle.checks.ProgramUnitWithoutOrReplaceCheck;
+import org.sonar.plugins.oracle.checks.RollbackInProgramUnitCheck;
+import org.sonar.plugins.oracle.checks.RownumWithoutOrderByCheck;
 import org.sonar.plugins.oracle.checks.TableWithoutPrimaryKeyCheck;
+import org.sonar.plugins.oracle.checks.UnnamedConstraintCheck;
 import org.sonar.plugins.oracle.checks.UpperKeywordsCheck;
+import org.sonar.plugins.oracle.checks.Varchar2WithoutSizeCheck;
+import org.sonar.plugins.oracle.checks.WhenOthersWithoutRaiseCheck;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,6 +56,22 @@ public class OracleSensor implements Sensor {
         RULE_MAP.put(TableWithoutPrimaryKeyCheck.RULE_KEY, TableWithoutPrimaryKeyCheck.class);
         RULE_MAP.put(UpperKeywordsCheck.RULE_KEY, UpperKeywordsCheck.class);
         RULE_MAP.put(DmlWithoutWhereCheck.RULE_KEY, DmlWithoutWhereCheck.class);
+        RULE_MAP.put(CommitInProgramUnitCheck.RULE_KEY, CommitInProgramUnitCheck.class);
+        RULE_MAP.put(WhenOthersWithoutRaiseCheck.RULE_KEY, WhenOthersWithoutRaiseCheck.class);
+        RULE_MAP.put(RownumWithoutOrderByCheck.RULE_KEY, RownumWithoutOrderByCheck.class);
+        RULE_MAP.put(Varchar2WithoutSizeCheck.RULE_KEY, Varchar2WithoutSizeCheck.class);
+        RULE_MAP.put(UnnamedConstraintCheck.RULE_KEY, UnnamedConstraintCheck.class);
+        RULE_MAP.put(ProcedureWithoutExceptionHandlingCheck.RULE_KEY, ProcedureWithoutExceptionHandlingCheck.class);
+        RULE_MAP.put(InsertWithoutColumnListCheck.RULE_KEY, InsertWithoutColumnListCheck.class);
+        RULE_MAP.put(ConnectByWithoutPriorCheck.RULE_KEY, ConnectByWithoutPriorCheck.class);
+        RULE_MAP.put(CreateSequenceWithoutCacheOrderCheck.RULE_KEY, CreateSequenceWithoutCacheOrderCheck.class);
+        RULE_MAP.put(MergeWithoutNotMatchedCheck.RULE_KEY, MergeWithoutNotMatchedCheck.class);
+        RULE_MAP.put(AnonymousBlockWithoutExceptionHandlingCheck.RULE_KEY, AnonymousBlockWithoutExceptionHandlingCheck.class);
+        RULE_MAP.put(AlterTableDropColumnCheck.RULE_KEY, AlterTableDropColumnCheck.class);
+        RULE_MAP.put(HavingWithoutGroupByCheck.RULE_KEY, HavingWithoutGroupByCheck.class);
+        RULE_MAP.put(ProgramUnitWithoutOrReplaceCheck.RULE_KEY, ProgramUnitWithoutOrReplaceCheck.class);
+        RULE_MAP.put(RollbackInProgramUnitCheck.RULE_KEY, RollbackInProgramUnitCheck.class);
+        RULE_MAP.put(CheckConstraintNullComparisonCheck.RULE_KEY, CheckConstraintNullComparisonCheck.class);
     }
 
     @Override

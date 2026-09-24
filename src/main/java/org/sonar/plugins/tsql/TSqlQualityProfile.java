@@ -24,6 +24,14 @@ public class TSqlQualityProfile implements BuiltInQualityProfilesDefinition {
         profile.activateRule(TSqlRulesDefinition.REPOSITORY_KEY, UpperKeywordsCheck.RULE_KEY);
         profile.activateRule(TSqlRulesDefinition.REPOSITORY_KEY, DmlWithoutWhereCheck.RULE_KEY);
         profile.activateRule(TSqlRulesDefinition.REPOSITORY_KEY, TopWithoutOrderByCheck.RULE_KEY);
+        profile.activateRule(TSqlRulesDefinition.REPOSITORY_KEY, DeprecatedDataTypeCheck.RULE_KEY);
+        profile.activateRule(TSqlRulesDefinition.REPOSITORY_KEY, AvoidPrintStatementCheck.RULE_KEY);
+        profile.activateRule(TSqlRulesDefinition.REPOSITORY_KEY, AvoidRaiserrorCheck.RULE_KEY);
+        profile.activateRule(TSqlRulesDefinition.REPOSITORY_KEY, CartesianProductCheck.RULE_KEY);
+        profile.activateRule(TSqlRulesDefinition.REPOSITORY_KEY, AvoidWhileLoopCheck.RULE_KEY);
+        profile.activateRule(TSqlRulesDefinition.REPOSITORY_KEY, ConvertWithoutStyleCheck.RULE_KEY);
+        profile.activateRule(TSqlRulesDefinition.REPOSITORY_KEY, AvoidIndexHintCheck.RULE_KEY);
+        profile.activateRule(TSqlRulesDefinition.REPOSITORY_KEY, ProcedureWithoutErrorHandlingCheck.RULE_KEY);
 
         profile.done();
     }

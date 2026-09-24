@@ -18,6 +18,6 @@ class TSqlQualityProfileTest {
 
         assertThat(profile).isNotNull();
         assertThat(profile.isDefault()).isTrue();
-        assertThat(profile.rules()).hasSize(12);
+        assertThat(profile.rules()).hasSize(20);
     }
 }

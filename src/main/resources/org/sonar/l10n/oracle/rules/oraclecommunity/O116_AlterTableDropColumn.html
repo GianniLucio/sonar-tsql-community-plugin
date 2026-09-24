@@ -1,0 +1,14 @@
+<p>Review <code>ALTER TABLE ... DROP COLUMN</code> statements carefully.</p>
+<p>Dropping a column permanently removes its data and cannot be undone once the DDL is committed (Oracle DDL
+auto-commits). Consider marking the column <code>UNUSED</code> first, or confirm there is a verified backup/rollback
+plan before dropping it outright.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+ALTER TABLE employees DROP COLUMN legacy_code;
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+ALTER TABLE employees SET UNUSED COLUMN legacy_code;
+-- drop later, once verified, during a maintenance window:
+-- ALTER TABLE employees DROP UNUSED COLUMNS;
+</pre>

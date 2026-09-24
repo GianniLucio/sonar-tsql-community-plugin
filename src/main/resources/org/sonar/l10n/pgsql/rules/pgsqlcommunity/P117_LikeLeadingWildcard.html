@@ -1,0 +1,12 @@
+<p><code>LIKE</code>/<code>ILIKE</code> patterns should not start with a wildcard (<code>%</code> or <code>_</code>).</p>
+<p>A leading wildcard prevents a standard B-tree index from being used to satisfy the predicate, forcing a full table
+scan. Consider a trigram index (<code>pg_trgm</code>) or a full-text search index if suffix/substring matching is
+required.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+SELECT id FROM users WHERE name LIKE '%foo';
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+SELECT id FROM users WHERE name LIKE 'foo%';
+</pre>

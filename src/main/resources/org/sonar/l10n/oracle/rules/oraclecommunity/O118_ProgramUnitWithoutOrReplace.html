@@ -1,0 +1,20 @@
+<p><code>CREATE PROCEDURE</code>/<code>FUNCTION</code>/<code>PACKAGE</code>/<code>TRIGGER</code> should use <code>OR REPLACE</code>.</p>
+<p>A plain <code>CREATE</code> statement fails with <code>ORA-00955</code> (name already used) if the object already
+exists, making deployment scripts non-idempotent. Adding <code>OR REPLACE</code> lets the same script be re-run
+safely across environments.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+CREATE PROCEDURE refresh_stats AS
+BEGIN
+    NULL;
+END;
+/
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+CREATE OR REPLACE PROCEDURE refresh_stats AS
+BEGIN
+    NULL;
+END;
+/
+</pre>

@@ -1,0 +1,12 @@
+<h2>Why is this an issue?</h2>
+<p><code>GROUP BY</code> already collapses the result set to one row per distinct group. Adding <code>DISTINCT</code> on top of it is redundant, adds an unnecessary deduplication pass, and can mislead readers into thinking the query needs both.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+SELECT DISTINCT department_id, COUNT(*) FROM employees GROUP BY department_id;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+SELECT department_id, COUNT(*) FROM employees GROUP BY department_id;
+</pre>

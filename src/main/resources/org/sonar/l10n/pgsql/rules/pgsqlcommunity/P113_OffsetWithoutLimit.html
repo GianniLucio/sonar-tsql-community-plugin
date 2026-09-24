@@ -1,0 +1,12 @@
+<h2>Why is this an issue?</h2>
+<p>An <code>OFFSET</code> clause without a corresponding <code>LIMIT</code> still requires PostgreSQL to compute and discard every skipped row before returning the rest of the result set. This wastes I/O and CPU and often indicates a missing pagination bound.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+SELECT id, name FROM users ORDER BY id OFFSET 100;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+SELECT id, name FROM users ORDER BY id LIMIT 20 OFFSET 100;
+</pre>

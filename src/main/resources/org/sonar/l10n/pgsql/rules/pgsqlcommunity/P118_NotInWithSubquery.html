@@ -1,0 +1,12 @@
+<p>Avoid <code>NOT IN</code> with a subquery.</p>
+<p>If the subquery returns even a single <code>NULL</code> value, the whole <code>NOT IN</code> condition evaluates to
+<code>UNKNOWN</code> for every row, and the outer query silently returns no rows at all. <code>NOT EXISTS</code> does not
+suffer from this NULL trap and should be preferred.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+SELECT id FROM users WHERE id NOT IN (SELECT user_id FROM banned);
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+SELECT id FROM users u WHERE NOT EXISTS (SELECT 1 FROM banned b WHERE b.user_id = u.id);
+</pre>

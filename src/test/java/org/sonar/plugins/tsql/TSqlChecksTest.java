@@ -157,4 +157,87 @@ class TSqlChecksTest {
         check = new TopWithoutOrderByCheck();
         assertThat(scanWithCheck("SELECT TOP 10 ID FROM dbo.Users ORDER BY ID;", check)).isEmpty();
     }
+
+    @Test
+    void testDeprecatedDataType() {
+        DeprecatedDataTypeCheck check = new DeprecatedDataTypeCheck();
+        String nonCompliant = "CREATE TABLE dbo.Articles (ArticleID INT, Body TEXT, Thumbnail IMAGE);";
+        assertThat(scanWithCheck(nonCompliant, check)).hasSize(2);
+
+        check = new DeprecatedDataTypeCheck();
+        String compliant = "CREATE TABLE dbo.Articles (ArticleID INT, Body VARCHAR(MAX));";
+        assertThat(scanWithCheck(compliant, check)).isEmpty();
+    }
+
+    @Test
+    void testAvoidPrintStatement() {
+        AvoidPrintStatementCheck check = new AvoidPrintStatementCheck();
+        assertThat(scanWithCheck("PRINT 'Processing started';", check)).hasSize(1);
+
+        check = new AvoidPrintStatementCheck();
+        assertThat(scanWithCheck("SELECT 1;", check)).isEmpty();
+    }
+
+    @Test
+    void testAvoidRaiserror() {
+        AvoidRaiserrorCheck check = new AvoidRaiserrorCheck();
+        assertThat(scanWithCheck("RAISERROR('Invalid value', 16, 1);", check)).hasSize(1);
+
+        check = new AvoidRaiserrorCheck();
+        assertThat(scanWithCheck("THROW 51000, 'Invalid value', 1;", check)).isEmpty();
+    }
+
+    @Test
+    void testCartesianProduct() {
+        CartesianProductCheck check = new CartesianProductCheck();
+        String nonCompliant = "SELECT o.OrderID, c.CustomerName FROM dbo.Orders o, dbo.Customers c;";
+        assertThat(scanWithCheck(nonCompliant, check)).hasSize(1);
+
+        check = new CartesianProductCheck();
+        String compliant = "SELECT o.OrderID, c.CustomerName FROM dbo.Orders o INNER JOIN dbo.Customers c ON c.CustomerID = o.CustomerID;";
+        assertThat(scanWithCheck(compliant, check)).isEmpty();
+
+        check = new CartesianProductCheck();
+        String compliantWithWhere = "SELECT o.OrderID, c.CustomerName FROM dbo.Orders o, dbo.Customers c WHERE c.CustomerID = o.CustomerID;";
+        assertThat(scanWithCheck(compliantWithWhere, check)).isEmpty();
+    }
+
+    @Test
+    void testAvoidWhileLoop() {
+        AvoidWhileLoopCheck check = new AvoidWhileLoopCheck();
+        String nonCompliant = "DECLARE @i INT = 0;\nWHILE @i < 10\nBEGIN\nSET @i = @i + 1;\nEND;";
+        assertThat(scanWithCheck(nonCompliant, check)).hasSize(1);
+
+        check = new AvoidWhileLoopCheck();
+        assertThat(scanWithCheck("SELECT 1;", check)).isEmpty();
+    }
+
+    @Test
+    void testConvertWithoutStyle() {
+        ConvertWithoutStyleCheck check = new ConvertWithoutStyleCheck();
+        assertThat(scanWithCheck("SELECT CONVERT(DATETIME, @d);", check)).hasSize(1);
+
+        check = new ConvertWithoutStyleCheck();
+        assertThat(scanWithCheck("SELECT CONVERT(DATETIME, @d, 120);", check)).isEmpty();
+    }
+
+    @Test
+    void testAvoidIndexHint() {
+        AvoidIndexHintCheck check = new AvoidIndexHintCheck();
+        assertThat(scanWithCheck("SELECT ID FROM dbo.T WITH (INDEX(1));", check)).hasSize(1);
+
+        check = new AvoidIndexHintCheck();
+        assertThat(scanWithCheck("SELECT ID FROM dbo.T WITH (NOLOCK);", check)).isEmpty();
+    }
+
+    @Test
+    void testProcedureWithoutErrorHandling() {
+        ProcedureWithoutErrorHandlingCheck check = new ProcedureWithoutErrorHandlingCheck();
+        String nonCompliant = "CREATE PROCEDURE dbo.usp_Test AS SELECT 1;";
+        assertThat(scanWithCheck(nonCompliant, check)).hasSize(1);
+
+        check = new ProcedureWithoutErrorHandlingCheck();
+        String compliant = "CREATE PROCEDURE dbo.usp_Test AS BEGIN TRY SELECT 1; END TRY BEGIN CATCH SELECT 2; END CATCH;";
+        assertThat(scanWithCheck(compliant, check)).isEmpty();
+    }
 }

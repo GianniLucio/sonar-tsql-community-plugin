@@ -1,0 +1,12 @@
+<p><code>CONNECT BY</code> should reference <code>PRIOR</code>.</p>
+<p>A hierarchical query without a <code>PRIOR</code> comparison in its <code>CONNECT BY</code> clause has no defined
+parent/child relationship. Depending on the data this can raise <code>ORA-01436: CONNECT BY loop in user data</code> or
+silently produce an unbounded, incorrect result set.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+SELECT id FROM employees CONNECT BY id = manager_id;
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+SELECT id FROM employees CONNECT BY PRIOR id = manager_id;
+</pre>

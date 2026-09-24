@@ -1,0 +1,18 @@
+<p>Stored procedures should handle errors with a <code>BEGIN TRY ... END TRY / BEGIN CATCH ... END CATCH</code> block.</p>
+<p>Without structured error handling, an unexpected runtime error aborts the batch and can leave the caller without any
+diagnostic information, and any open transaction may be left in an inconsistent state.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+CREATE PROCEDURE dbo.usp_UpdateBalance AS
+    UPDATE dbo.Accounts SET Balance = Balance - 100 WHERE AccountId = 1;
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+CREATE PROCEDURE dbo.usp_UpdateBalance AS
+BEGIN TRY
+    UPDATE dbo.Accounts SET Balance = Balance - 100 WHERE AccountId = 1;
+END TRY
+BEGIN CATCH
+    THROW;
+END CATCH;
+</pre>

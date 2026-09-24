@@ -1,0 +1,12 @@
+<p><code>DROP COLUMN</code>/<code>DROP CONSTRAINT</code> should use <code>IF EXISTS</code>.</p>
+<p>Migration scripts are often re-run or applied out of order across environments. Without <code>IF EXISTS</code>, dropping
+a column or constraint that was already removed (or never created in that environment) aborts the migration with an
+error.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+ALTER TABLE users DROP COLUMN age;
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+ALTER TABLE users DROP COLUMN IF EXISTS age;
+</pre>

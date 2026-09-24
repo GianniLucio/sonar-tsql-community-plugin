@@ -1,0 +1,21 @@
+<p>Anonymous PL/SQL blocks should define an <code>EXCEPTION</code> handling section.</p>
+<p>An anonymous <code>DECLARE</code>/<code>BEGIN</code> ... <code>END</code> block, such as those used in migration and
+deployment scripts, has no caller-provided error handling. Without an <code>EXCEPTION</code> block, any runtime error
+aborts the script with no opportunity to log context or perform cleanup.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+BEGIN
+    UPDATE accounts SET balance = balance - 100 WHERE account_id = 1;
+END;
+/
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+BEGIN
+    UPDATE accounts SET balance = balance - 100 WHERE account_id = 1;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE;
+END;
+/
+</pre>

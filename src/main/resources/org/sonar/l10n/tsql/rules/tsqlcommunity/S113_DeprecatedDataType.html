@@ -1,0 +1,18 @@
+<h2>Why is this an issue?</h2>
+<p>The <code>TEXT</code>, <code>NTEXT</code>, and <code>IMAGE</code> data types are deprecated by Microsoft and will be removed in a future version of SQL Server. They also have significant functional limitations compared to their replacements (e.g. limited string functions, no in-row storage).</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+CREATE TABLE dbo.Articles (
+    ArticleID INT PRIMARY KEY,
+    Body TEXT
+);
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+CREATE TABLE dbo.Articles (
+    ArticleID INT PRIMARY KEY,
+    Body VARCHAR(MAX)
+);
+</pre>

@@ -24,6 +24,14 @@ public class PostgreSqlQualityProfile implements BuiltInQualityProfilesDefinitio
         profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, UnloggedTableUsageCheck.RULE_KEY);
         profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, DmlWithoutWhereCheck.RULE_KEY);
         profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, LimitWithoutOrderByCheck.RULE_KEY);
+        profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, OffsetWithoutLimitCheck.RULE_KEY);
+        profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, CartesianProductCheck.RULE_KEY);
+        profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, RedundantDistinctWithGroupByCheck.RULE_KEY);
+        profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, UselessCheckConstraintCheck.RULE_KEY);
+        profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, LikeLeadingWildcardCheck.RULE_KEY);
+        profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, NotInWithSubqueryCheck.RULE_KEY);
+        profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, DropWithoutIfExistsCheck.RULE_KEY);
+        profile.activateRule(PostgreSqlRulesDefinition.REPOSITORY_KEY, ForeignKeyWithoutOnDeleteActionCheck.RULE_KEY);
 
         profile.done();
     }

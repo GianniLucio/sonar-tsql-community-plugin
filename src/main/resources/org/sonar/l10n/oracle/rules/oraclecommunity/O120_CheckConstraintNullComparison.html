@@ -1,0 +1,19 @@
+<p><code>CHECK</code> constraints should not compare a value with <code>NULL</code> using <code>=</code> or <code>&lt;&gt;</code>.</p>
+<p>In three-valued SQL logic, any comparison with <code>NULL</code> using <code>=</code> or <code>&lt;&gt;</code> evaluates to
+<code>UNKNOWN</code>, never to <code>FALSE</code>. Oracle accepts <code>UNKNOWN</code> as satisfying a <code>CHECK</code>
+constraint, so the constraint silently never rejects rows on that condition. Use <code>IS NULL</code> or
+<code>IS NOT NULL</code> instead.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+CREATE TABLE employees (
+    id NUMBER PRIMARY KEY,
+    status VARCHAR2(20) CHECK (status = NULL)
+);
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+CREATE TABLE employees (
+    id NUMBER PRIMARY KEY,
+    status VARCHAR2(20) NOT NULL
+);
+</pre>

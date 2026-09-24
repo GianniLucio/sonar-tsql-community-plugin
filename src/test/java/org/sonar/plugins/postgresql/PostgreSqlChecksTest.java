@@ -196,4 +196,94 @@ public class PostgreSqlChecksTest {
         PostgreSqlAstScanner.ScanResult queryResult = scanner.parse(querySql);
         assertThat(queryResult.hasSyntaxErrors()).isFalse();
     }
+
+    @Test
+    public void testOffsetWithoutLimit() {
+        OffsetWithoutLimitCheck check = new OffsetWithoutLimitCheck();
+        assertThat(scanWithCheck("SELECT id FROM users ORDER BY id OFFSET 100;", check)).hasSize(1);
+
+        check = new OffsetWithoutLimitCheck();
+        assertThat(scanWithCheck("SELECT id FROM users ORDER BY id LIMIT 20 OFFSET 100;", check)).isEmpty();
+    }
+
+    @Test
+    public void testCartesianProduct() {
+        CartesianProductCheck check = new CartesianProductCheck();
+        String nonCompliant = "SELECT o.id, c.name FROM orders o, customers c;";
+        assertThat(scanWithCheck(nonCompliant, check)).hasSize(1);
+
+        check = new CartesianProductCheck();
+        String compliant = "SELECT o.id, c.name FROM orders o INNER JOIN customers c ON c.id = o.customer_id;";
+        assertThat(scanWithCheck(compliant, check)).isEmpty();
+
+        check = new CartesianProductCheck();
+        String compliantWithWhere = "SELECT o.id, c.name FROM orders o, customers c WHERE c.id = o.customer_id;";
+        assertThat(scanWithCheck(compliantWithWhere, check)).isEmpty();
+    }
+
+    @Test
+    public void testRedundantDistinctWithGroupBy() {
+        RedundantDistinctWithGroupByCheck check = new RedundantDistinctWithGroupByCheck();
+        String nonCompliant = "SELECT DISTINCT department_id, COUNT(*) FROM employees GROUP BY department_id;";
+        assertThat(scanWithCheck(nonCompliant, check)).hasSize(1);
+
+        check = new RedundantDistinctWithGroupByCheck();
+        String compliant = "SELECT department_id, COUNT(*) FROM employees GROUP BY department_id;";
+        assertThat(scanWithCheck(compliant, check)).isEmpty();
+    }
+
+    @Test
+    public void testUselessCheckConstraint() {
+        UselessCheckConstraintCheck check = new UselessCheckConstraintCheck();
+        String nonCompliant = "CREATE TABLE orders (id INT PRIMARY KEY, amount NUMERIC CHECK (1 = 1));";
+        assertThat(scanWithCheck(nonCompliant, check)).hasSize(1);
+
+        check = new UselessCheckConstraintCheck();
+        String nonCompliantTrue = "CREATE TABLE orders (id INT PRIMARY KEY, amount NUMERIC CHECK (TRUE));";
+        assertThat(scanWithCheck(nonCompliantTrue, check)).hasSize(1);
+
+        check = new UselessCheckConstraintCheck();
+        String compliant = "CREATE TABLE orders (id INT PRIMARY KEY, amount NUMERIC CHECK (amount > 0));";
+        assertThat(scanWithCheck(compliant, check)).isEmpty();
+    }
+
+    @Test
+    public void testLikeLeadingWildcard() {
+        LikeLeadingWildcardCheck check = new LikeLeadingWildcardCheck();
+        assertThat(scanWithCheck("SELECT id FROM users WHERE name LIKE '%foo';", check)).hasSize(1);
+
+        check = new LikeLeadingWildcardCheck();
+        assertThat(scanWithCheck("SELECT id FROM users WHERE name LIKE 'foo%';", check)).isEmpty();
+    }
+
+    @Test
+    public void testNotInWithSubquery() {
+        NotInWithSubqueryCheck check = new NotInWithSubqueryCheck();
+        String nonCompliant = "SELECT id FROM users WHERE id NOT IN (SELECT user_id FROM banned);";
+        assertThat(scanWithCheck(nonCompliant, check)).hasSize(1);
+
+        check = new NotInWithSubqueryCheck();
+        String compliant = "SELECT id FROM users WHERE id NOT IN (1, 2, 3);";
+        assertThat(scanWithCheck(compliant, check)).isEmpty();
+    }
+
+    @Test
+    public void testDropWithoutIfExists() {
+        DropWithoutIfExistsCheck check = new DropWithoutIfExistsCheck();
+        assertThat(scanWithCheck("ALTER TABLE users DROP COLUMN age;", check)).hasSize(1);
+
+        check = new DropWithoutIfExistsCheck();
+        assertThat(scanWithCheck("ALTER TABLE users DROP COLUMN IF EXISTS age;", check)).isEmpty();
+    }
+
+    @Test
+    public void testForeignKeyWithoutOnDeleteAction() {
+        ForeignKeyWithoutOnDeleteActionCheck check = new ForeignKeyWithoutOnDeleteActionCheck();
+        String nonCompliant = "CREATE TABLE orders (id INT, user_id INT, FOREIGN KEY (user_id) REFERENCES users(id));";
+        assertThat(scanWithCheck(nonCompliant, check)).hasSize(1);
+
+        check = new ForeignKeyWithoutOnDeleteActionCheck();
+        String compliant = "CREATE TABLE orders (id INT, user_id INT, FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE);";
+        assertThat(scanWithCheck(compliant, check)).isEmpty();
+    }
 }

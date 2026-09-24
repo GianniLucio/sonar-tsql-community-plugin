@@ -1,0 +1,18 @@
+<h2>Why is this an issue?</h2>
+<p>A <code>CHECK</code> constraint that always evaluates to a constant true value (such as <code>CHECK (TRUE)</code> or <code>CHECK (1 = 1)</code>) never rejects any row. It gives a false sense of data validation while adding overhead to every insert and update.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+CREATE TABLE orders (
+  id INT PRIMARY KEY,
+  amount NUMERIC CHECK (1 = 1)
+);
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+CREATE TABLE orders (
+  id INT PRIMARY KEY,
+  amount NUMERIC CHECK (amount &gt; 0)
+);
+</pre>
